@@ -1,0 +1,55 @@
+import type { Developer } from "../components/DeveloperCard";
+
+export const developers: Developer[] = [
+  {
+    slug: "arjun-dhiman",
+    name: "Arjun Dhiman",
+    avatarInitials: "AD",
+    avatarColor: "#F97316",
+    badgeText: "🏆 Adobe Certified Master",
+    title: "Adobe Commerce Certified Master | 13+ Years",
+    location: "13+ Years · Sofia, Bulgaria",
+    availability: "Immediate",
+    hourlyRateEur: 55,
+    skills: [
+      "Magento 2",
+      "Adobe Commerce",
+      "Hyvä",
+      "PHP",
+      "GraphQL",
+      "Headless Commerce",
+      "AWS",
+      "Docker",
+    ],
+    headline:
+      "Architect-level Adobe Commerce specialist focused on performance, clean implementations, and pragmatic delivery for high-traffic ecommerce.",
+  },
+  {
+    slug: "tinkesh-kumar",
+    name: "Tinkesh Kumar",
+    avatarInitials: "TK",
+    avatarColor: "#7C3AED",
+    badgeText: "7x Adobe Certified",
+    title: "7x Adobe Commerce Certified | Magento 2 & NodeJS Developer",
+    location: "11+ Years · Noida, India",
+    availability: "Available",
+    hourlyRateEur: 45,
+    skills: ["Magento 2", "Adobe Commerce", "NodeJS", "PHP", "Azure"],
+    headline:
+      "Magento 2, NodeJS, payment gateway, and extension specialist with 11+ years delivering custom eCommerce solutions and troubleshooting complex builds.",
+  },
+  {
+    slug: "aleksandar-harutyunyan",
+    name: "Aleksandar Harutyunyan",
+    avatarInitials: "AH",
+    avatarColor: "#0D9488",
+    badgeText: "Adobe + Salesforce Certified",
+    title: "Adobe Commerce & Salesforce B2C Commerce Developer | 20+ Years Experience",
+    location: "20+ Years · Bulgaria 🇧🇬",
+    availability: "Available",
+    hourlyRateEur: 55,
+    skills: ["Adobe Commerce", "SFCC", "PHP", "Adyen", "Avalara"],
+    headline:
+      "Enterprise eCommerce developer with 20+ years across Adobe Commerce, Salesforce Commerce Cloud, platform migrations, and major integrations.",
+  },
+];

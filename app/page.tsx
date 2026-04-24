@@ -1,65 +1,259 @@
-import Image from "next/image";
+import type { Metadata } from "next";
+import Link from "next/link";
+import DeveloperCard from "./components/DeveloperCard";
+import Footer from "./components/Footer";
+import Header from "./components/Header";
+import { developers } from "./data/developers";
+
+export const metadata: Metadata = {
+  title: "Hire Magento developers",
+  description:
+    "Find trusted Adobe Commerce (Magento) developers. Vetted specialists for Magento 2, Hyvä, performance, headless, and custom builds.",
+};
 
 export default function Home() {
   return (
-    <div className="flex flex-col flex-1 items-center justify-center bg-zinc-50 font-sans dark:bg-black">
-      <main className="flex flex-1 w-full max-w-3xl flex-col items-center justify-between py-32 px-16 bg-white dark:bg-black sm:items-start">
-        <Image
-          className="dark:invert"
-          src="/next.svg"
-          alt="Next.js logo"
-          width={100}
-          height={20}
-          priority
-        />
-        <div className="flex flex-col items-center gap-6 text-center sm:items-start sm:text-left">
-          <h1 className="max-w-xs text-3xl font-semibold leading-10 tracking-tight text-black dark:text-zinc-50">
-            To get started, edit the page.tsx file.
-          </h1>
-          <p className="max-w-md text-lg leading-8 text-zinc-600 dark:text-zinc-400">
-            Looking for a starting point or more instructions? Head over to{" "}
-            <a
-              href="https://vercel.com/templates?framework=next.js&utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
+    <div className="flex min-h-full flex-1 flex-col">
+      <Header />
+
+      <main className="flex-1">
+        <section className="relative overflow-hidden bg-linear-to-b from-zinc-50 to-white">
+          <div className="pointer-events-none absolute inset-0">
+            <div className="absolute -top-24 left-1/2 h-72 w-72 -translate-x-1/2 rounded-full bg-orange-500/15 blur-3xl sm:h-96 sm:w-96" />
+            <div className="absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-zinc-900/10 blur-3xl sm:h-96 sm:w-96" />
+          </div>
+
+          <div className="relative mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+            <div className="grid items-start gap-12 lg:grid-cols-12">
+              <div className="lg:col-span-5">
+                <p className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200">
+                  Curated marketplace for Adobe Commerce / Magento
+                </p>
+                <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
+                  Find a Trusted Magento Developer
+                </h1>
+                <p className="mt-5 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
+                  Hire proven Magento 2 and Adobe Commerce experts for audits,
+                  bug fixes, Hyvä builds, headless commerce, and full store
+                  deliveries—without the noise of general freelancing platforms.
+                </p>
+                <p className="mt-3 text-sm font-semibold text-orange-600">
+                  ⚡ Average response time: 2 hours
+                </p>
+
+                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                  <Link
+                    href="/developers"
+                    className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                  >
+                    Browse developers →
+                  </Link>
+                  <Link
+                    href="/how-it-works"
+                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-zinc-800 ring-1 ring-zinc-200 hover:bg-white"
+                  >
+                    How it works
+                  </Link>
+                </div>
+                <p className="mt-4 text-sm text-zinc-500">
+                  Trusted by 50+ Magento stores across Europe
+                </p>
+
+                <div className="mt-12 grid max-w-xl grid-cols-2 gap-4 sm:grid-cols-3">
+                  {[
+                    { k: "Vetted talent", v: "Magento-only" },
+                    { k: "Fast starts", v: "Immediate availability" },
+                    { k: "Clear pricing", v: "Fixed packages from €99" },
+                  ].map((s) => (
+                    <div
+                      key={s.k}
+                      className="rounded-2xl border border-zinc-200/70 bg-white/70 p-5 shadow-sm shadow-zinc-900/5 backdrop-blur"
+                    >
+                      <p className="text-sm font-semibold text-zinc-900">
+                        {s.k}
+                      </p>
+                      <p className="mt-1 text-sm text-zinc-600">{s.v}</p>
+                    </div>
+                  ))}
+                </div>
+              </div>
+
+              <div className="lg:col-span-7">
+                <div className="rounded-3xl border border-zinc-200/70 bg-white p-5 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.5)] sm:p-6">
+                  <p className="text-sm font-semibold text-zinc-900">
+                    Featured developers
+                  </p>
+                  <p className="mt-1 text-sm text-zinc-600">
+                    Compare three verified Magento specialists and pick the best fit for your project.
+                  </p>
+                  <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                    {developers.map((developer) => (
+                      <DeveloperCard key={developer.slug} developer={developer} />
+                    ))}
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-zinc-100/80">
+          <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+              Why merchants choose MageMatch over Upwork
+            </h2>
+            <div className="mt-8 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
+              <div className="grid grid-cols-2 border-b border-zinc-200">
+                <div className="bg-zinc-50 px-5 py-4 text-sm font-semibold text-zinc-900 sm:px-7">
+                  ❌ Upwork
+                </div>
+                <div className="bg-orange-50/70 px-5 py-4 text-sm font-semibold text-orange-700 sm:px-7">
+                  ✅ MageMatch
+                </div>
+              </div>
+              <div className="grid gap-y-0">
+                {[
+                  ["500 random developers", "Magento-only experts"],
+                  ["Hourly unknown costs", "Fixed price packages"],
+                  ["No vetting", "Adobe Certified only"],
+                  ["Race to the bottom prices", "Fair, transparent rates"],
+                ].map((row) => (
+                  <div
+                    key={row[0]}
+                    className="grid grid-cols-2 border-t border-zinc-200 text-sm"
+                  >
+                    <div className="px-5 py-4 text-zinc-600 sm:px-7">{row[0]}</div>
+                    <div className="px-5 py-4 font-medium text-zinc-900 sm:px-7">{row[1]}</div>
+                  </div>
+                ))}
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-[#111827]">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-6 text-center text-sm font-medium text-white sm:flex-row sm:gap-0 sm:px-6">
+            {[
+              "Adobe Certified Developers: 3",
+              "2hr Average Response",
+              "3 Verified Experts",
+              "EU Timezone Coverage",
+            ].map((item, index) => (
+              <div key={item} className="flex items-center">
+                {index > 0 ? <span className="mx-4 hidden text-orange-400 sm:inline">|</span> : null}
+                <span>{item}</span>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+          <div className="flex items-end justify-between gap-6">
+            <div>
+              <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+                How it works
+              </h2>
+              <p className="mt-3 max-w-2xl text-base leading-7 text-zinc-600">
+                Share your goals, get matched with Magento specialists, and
+                launch with confidence—fast.
+              </p>
+            </div>
+            <Link
+              href="/how-it-works"
+              className="hidden text-sm font-semibold text-orange-700 hover:text-orange-800 sm:inline-flex"
             >
-              Templates
-            </a>{" "}
-            or the{" "}
-            <a
-              href="https://nextjs.org/learn?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-              className="font-medium text-zinc-950 dark:text-zinc-50"
-            >
-              Learning
-            </a>{" "}
-            center.
-          </p>
-        </div>
-        <div className="flex flex-col gap-4 text-base font-medium sm:flex-row">
-          <a
-            className="flex h-12 w-full items-center justify-center gap-2 rounded-full bg-foreground px-5 text-background transition-colors hover:bg-[#383838] dark:hover:bg-[#ccc] md:w-[158px]"
-            href="https://vercel.com/new?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            <Image
-              className="dark:invert"
-              src="/vercel.svg"
-              alt="Vercel logomark"
-              width={16}
-              height={16}
-            />
-            Deploy Now
-          </a>
-          <a
-            className="flex h-12 w-full items-center justify-center rounded-full border border-solid border-black/[.08] px-5 transition-colors hover:border-transparent hover:bg-black/[.04] dark:border-white/[.145] dark:hover:bg-[#1a1a1a] md:w-[158px]"
-            href="https://nextjs.org/docs?utm_source=create-next-app&utm_medium=appdir-template-tw&utm_campaign=create-next-app"
-            target="_blank"
-            rel="noopener noreferrer"
-          >
-            Documentation
-          </a>
-        </div>
+              Learn more →
+            </Link>
+          </div>
+
+          <div className="mt-10 grid gap-6 lg:grid-cols-3">
+            {[
+              {
+                step: "01",
+                title: "Describe the work",
+                desc: "Use our brief builder to turn messy requirements into a clear Magento scope.",
+              },
+              {
+                step: "02",
+                title: "Meet vetted developers",
+                desc: "Browse specialists by skill, availability, and track record—Magento only.",
+              },
+              {
+                step: "03",
+                title: "Start and ship",
+                desc: "Kick off quickly with developers from €40/hr and fixed packages from €99.",
+              },
+            ].map((s) => (
+              <div
+                key={s.step}
+                className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm"
+              >
+                <p className="text-xs font-semibold text-orange-700">{s.step}</p>
+                <p className="mt-3 text-lg font-semibold text-zinc-900">
+                  {s.title}
+                </p>
+                <p className="mt-2 text-sm leading-6 text-zinc-600">{s.desc}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="bg-zinc-50">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+              What store owners say
+            </h2>
+            <div className="mt-8 grid gap-6 lg:grid-cols-2">
+              {[
+                {
+                  quote:
+                    "Arjun fixed our checkout in 4 hours. We were losing €2,000/day in sales.",
+                  author: "Sarah M., Fashion Store Owner, Netherlands",
+                },
+                {
+                  quote:
+                    "Finally a platform that understands Magento. No more explaining what Hyvä is.",
+                  author: "Thomas K., B2B Store Manager, Germany",
+                },
+              ].map((t) => (
+                <article
+                  key={t.author}
+                  className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm"
+                >
+                  <p className="text-base tracking-wide text-amber-500">★★★★★</p>
+                  <p className="mt-4 text-4xl leading-none text-zinc-300">“</p>
+                  <p className="mt-2 text-base leading-7 text-zinc-700">{t.quote}</p>
+                  <p className="mt-4 text-sm font-semibold text-zinc-900">— {t.author}</p>
+                </article>
+              ))}
+            </div>
+          </div>
+        </section>
+
+        <section className="bg-orange-500">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
+            <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
+              Ready to fix your Magento store?
+            </h2>
+            <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-orange-50 sm:text-lg">
+              Get matched with a verified developer in under 2 hours.
+            </p>
+            <div className="mt-8">
+              <Link
+                href="/developers"
+                className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-orange-600 shadow-sm transition hover:bg-orange-50"
+              >
+                Start Free Match →
+              </Link>
+            </div>
+            <p className="mt-4 text-sm text-orange-100">
+              No account needed · Free to use · Pay only when you hire
+            </p>
+          </div>
+        </section>
       </main>
+
+      <Footer />
     </div>
   );
 }
