@@ -82,7 +82,54 @@ export default function AboutPage() {
                     key={c.title}
                     className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.55)]"
                   >
-                    <div className="h-10 w-10 rounded-2xl bg-orange-500/10 ring-1 ring-orange-200" />
+                    <div className="grid h-10 w-10 place-items-center rounded-2xl bg-orange-500/10 ring-1 ring-orange-200">
+                      {c.title === "For merchants" ? (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="#F97316"
+                          strokeWidth="2"
+                        >
+                          <path d="M3 7h18" />
+                          <path d="M5 7l1.5 10h11L19 7" />
+                          <path d="M9 11h6" />
+                        </svg>
+                      ) : c.title === "For developers" ? (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="#F97316"
+                          strokeWidth="2"
+                        >
+                          <path d="M8 8l-4 4 4 4" />
+                          <path d="M16 8l4 4-4 4" />
+                          <path d="M13 5l-2 14" />
+                        </svg>
+                      ) : c.title === "Magento-only signal" ? (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="#F97316"
+                          strokeWidth="2"
+                        >
+                          <path d="M12 21s7-4.35 7-11a7 7 0 10-14 0c0 6.65 7 11 7 11z" />
+                          <circle cx="12" cy="10" r="2.5" />
+                        </svg>
+                      ) : (
+                        <svg
+                          viewBox="0 0 24 24"
+                          className="h-5 w-5"
+                          fill="none"
+                          stroke="#F97316"
+                          strokeWidth="2"
+                        >
+                          <path d="M12 3l2.5 5 5.5.8-4 3.9.9 5.5-4.9-2.6-4.9 2.6.9-5.5-4-3.9 5.5-.8L12 3z" />
+                        </svg>
+                      )}
+                    </div>
                     <p className="mt-4 text-lg font-semibold text-zinc-900">
                       {c.title}
                     </p>

@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { extensions } from "../../data/extensions";
 
 export const metadata: Metadata = {
   title: "Arjun Dhiman — Adobe Commerce Certified Master",
@@ -260,6 +261,47 @@ export default function ArjunDhimanProfilePage() {
                         {proj.notes}
                       </p>
                     </div>
+                  ))}
+                </div>
+              </section>
+
+              <section className="mt-6 rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.5)] sm:p-8">
+                <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
+                  <div>
+                    <h2 className="text-xl font-semibold text-zinc-900">
+                      Open Source Contributions
+                    </h2>
+                    <p className="mt-2 text-sm leading-6 text-zinc-600">
+                      Free Magento extensions and tools published for the community.
+                    </p>
+                  </div>
+                  <Link
+                    href="/extensions"
+                    className="text-sm font-semibold text-orange-700 hover:text-orange-800"
+                  >
+                    View all extensions →
+                  </Link>
+                </div>
+
+                <div className="mt-6 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
+                  {extensions.map((extension) => (
+                    <a
+                      key={extension.repoUrl}
+                      href={extension.repoUrl}
+                      target="_blank"
+                      rel="noreferrer"
+                      className="rounded-2xl border border-zinc-200/70 bg-white p-5 shadow-sm shadow-zinc-900/5 transition hover:-translate-y-0.5 hover:border-orange-200"
+                    >
+                      <p className="text-sm font-semibold text-zinc-900">
+                        {extension.name}
+                      </p>
+                      <p className="mt-2 text-sm leading-6 text-zinc-600">
+                        {extension.description}
+                      </p>
+                      <p className="mt-3 text-xs font-medium text-orange-700">
+                        GitHub →
+                      </p>
+                    </a>
                   ))}
                 </div>
               </section>

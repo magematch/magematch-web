@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import Link from "next/link";
-import DeveloperCard from "./components/DeveloperCard";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { developers } from "./data/developers";
@@ -50,13 +49,13 @@ export default function Home() {
                   </Link>
                   <Link
                     href="/how-it-works"
-                    className="inline-flex items-center justify-center rounded-full px-6 py-3 text-sm font-semibold text-zinc-800 ring-1 ring-zinc-200 hover:bg-white"
+                    className="inline-flex items-center text-sm font-semibold text-zinc-700 hover:text-orange-700"
                   >
-                    How it works
+                    How it works →
                   </Link>
                 </div>
                 <p className="mt-4 text-sm text-zinc-500">
-                  Trusted by 50+ Magento stores across Europe
+                  Built by Adobe Commerce Certified Masters
                 </p>
 
                 <div className="mt-12 grid max-w-xl grid-cols-2 gap-4 sm:grid-cols-3">
@@ -86,10 +85,88 @@ export default function Home() {
                   <p className="mt-1 text-sm text-zinc-600">
                     Compare three verified Magento specialists and pick the best fit for your project.
                   </p>
-                  <div className="mt-5 grid gap-4 lg:grid-cols-3">
+                  <div className="mt-5 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
                     {developers.map((developer) => (
-                      <DeveloperCard key={developer.slug} developer={developer} />
+                      <article
+                        key={developer.slug}
+                        className="h-full rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm"
+                      >
+                        <div className="flex h-full flex-col">
+                          <div className="flex items-start gap-3">
+                            <div
+                              className="grid h-11 w-11 shrink-0 place-items-center rounded-full text-sm font-semibold text-white"
+                              style={{ backgroundColor: developer.avatarColor ?? "#F97316" }}
+                            >
+                              {developer.avatarInitials ??
+                                developer.name
+                                  .split(" ")
+                                  .slice(0, 2)
+                                  .map((part) => part[0])
+                                  .join("")}
+                            </div>
+
+                            <div className="min-w-0 flex-1">
+                              <h3 className="line-clamp-2 text-sm font-semibold leading-5 text-zinc-900">
+                                <Link
+                                  href={`/developers/${developer.slug}`}
+                                  className="hover:text-orange-700"
+                                >
+                                  {developer.name}
+                                </Link>
+                              </h3>
+                              <p className="mt-0.5 line-clamp-1 text-[11px] leading-4 text-zinc-600">
+                                {developer.title}
+                              </p>
+                            </div>
+                          </div>
+
+                          {typeof developer.hourlyRateEur === "number" ? (
+                            <p className="mt-2 inline-flex w-fit rounded-full bg-orange-50 px-2.5 py-1 text-xs font-bold text-orange-700 ring-1 ring-orange-200">
+                              €{developer.hourlyRateEur}/hr
+                            </p>
+                          ) : null}
+
+                          <div className="mt-2 inline-flex w-fit items-center gap-2 rounded-full bg-zinc-50 px-2.5 py-1 text-[11px] font-medium text-zinc-700 ring-1 ring-zinc-200">
+                            <span
+                              className={`h-2 w-2 rounded-full ${
+                                developer.availability === "Immediate" || developer.availability === "Available"
+                                  ? "bg-emerald-500"
+                                  : "bg-amber-500"
+                              }`}
+                            />
+                            {developer.availability}
+                          </div>
+
+                          <div className="mt-2 flex flex-wrap gap-1.5">
+                            {developer.skills.slice(0, 3).map((skill) => (
+                              <span
+                                key={skill}
+                                className="rounded-full bg-zinc-50 px-2 py-0.5 text-[11px] font-medium text-zinc-700 ring-1 ring-zinc-200"
+                              >
+                                {skill}
+                              </span>
+                            ))}
+                          </div>
+
+                          <div className="mt-auto pt-2">
+                            <Link
+                              href={`/developers/${developer.slug}`}
+                              className="inline-flex items-center gap-1 rounded-full border border-orange-200 bg-white px-3 py-1.5 text-xs font-semibold text-orange-700 transition hover:bg-orange-50"
+                            >
+                              View profile →
+                            </Link>
+                          </div>
+                        </div>
+                      </article>
                     ))}
+                  </div>
+                  <div className="mt-4 border-t border-zinc-200 pt-4">
+                    <Link
+                      href="/developers"
+                      className="inline-flex text-sm font-semibold text-orange-700 hover:text-orange-800"
+                    >
+                      View all developers →
+                    </Link>
                   </div>
                 </div>
               </div>
@@ -131,17 +208,20 @@ export default function Home() {
           </div>
         </section>
 
-        <section className="bg-[#111827]">
-          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-6 text-center text-sm font-medium text-white sm:flex-row sm:gap-0 sm:px-6">
+        <section className="bg-orange-50">
+          <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-6 text-center sm:flex-row sm:gap-0 sm:px-6">
             {[
-              "Adobe Certified Developers: 3",
-              "2hr Average Response",
-              "3 Verified Experts",
-              "EU Timezone Coverage",
+              { value: "3", label: "Adobe Certified Developers" },
+              { value: "2hr", label: "Average Response" },
+              { value: "3", label: "Verified Experts" },
+              { value: "EU", label: "Timezone Coverage" },
             ].map((item, index) => (
-              <div key={item} className="flex items-center">
-                {index > 0 ? <span className="mx-4 hidden text-orange-400 sm:inline">|</span> : null}
-                <span>{item}</span>
+              <div key={item.label} className="flex items-center">
+                {index > 0 ? <span className="mx-4 hidden text-[#FED7AA] sm:inline">|</span> : null}
+                <span className="text-sm">
+                  <span className="font-bold text-[#F97316]">{item.value}</span>{" "}
+                  <span className="font-medium text-[#374151]">{item.label}</span>
+                </span>
               </div>
             ))}
           </div>
@@ -188,8 +268,10 @@ export default function Home() {
                 key={s.step}
                 className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm"
               >
-                <p className="text-xs font-semibold text-orange-700">{s.step}</p>
-                <p className="mt-3 text-lg font-semibold text-zinc-900">
+                <div className="grid h-10 w-10 place-items-center rounded-full bg-[#F97316] text-[18px] font-semibold text-white">
+                  {s.step}
+                </div>
+                <p className="mt-4 text-lg font-semibold text-zinc-900">
                   {s.title}
                 </p>
                 <p className="mt-2 text-sm leading-6 text-zinc-600">{s.desc}</p>

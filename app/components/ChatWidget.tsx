@@ -20,6 +20,7 @@ export default function ChatWidget() {
   const [messages, setMessages] = useState<Message[]>([]);
   const [isTyping, setIsTyping] = useState(false);
   const [inputValue, setInputValue] = useState('');
+  const inputRef = useRef<HTMLInputElement>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const hasOpenedRef = useRef(false);
 
@@ -39,6 +40,34 @@ export default function ChatWidget() {
     }
   }, [isOpen]);
 
+  useEffect(() => {
+    const openChat = () => {
+      setIsOpen(true);
+      requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    };
+
+    window.addEventListener('openChat', openChat);
+    return () => {
+      window.removeEventListener('openChat', openChat);
+    };
+  }, []);
+
+  useEffect(() => {
+    if (isOpen) {
+      requestAnimationFrame(() => {
+        inputRef.current?.focus();
+      });
+    }
+  }, [isOpen]);
+
+  useEffect(() => {
+    if (isOpen && !isTyping) {
+      inputRef.current?.focus();
+    }
+  }, [messages.length, isTyping, isOpen]);
+
   async function sendUserMessage(content: string) {
     const trimmedContent = content.trim();
     if (isTyping || trimmedContent.length === 0) return;
@@ -51,6 +80,7 @@ export default function ChatWidget() {
 
     setMessages(outgoingMessages);
     setInputValue('');
+    inputRef.current?.focus();
     setIsTyping(true);
 
     try {
@@ -110,7 +140,13 @@ export default function ChatWidget() {
   return (
     <>
       <button
-        onClick={() => setIsOpen(true)}
+        id="chat"
+        onClick={() => {
+          setIsOpen(true);
+          requestAnimationFrame(() => {
+            inputRef.current?.focus();
+          });
+        }}
         className="fixed right-6 bottom-6 z-50 rounded-full bg-[#F97316] px-5 py-3 text-sm font-semibold text-white shadow-lg transition hover:bg-[#ea6a10] focus:outline-none focus-visible:ring-2 focus-visible:ring-[#F97316]/70"
         aria-label="Open MageMatch assistant"
       >
@@ -202,6 +238,7 @@ export default function ChatWidget() {
         <form onSubmit={handleSendMessage} className="border-t border-zinc-200 bg-white p-3">
           <div className="flex items-center gap-2">
             <input
+              ref={inputRef}
               type="text"
               value={inputValue}
               onChange={(event) => setInputValue(event.target.value)}

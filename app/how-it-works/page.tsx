@@ -144,25 +144,50 @@ export default function HowItWorksPage() {
                     {
                       title: "Magento-aware prompts",
                       desc: "Captures version, hosting, cache, theme, and critical extensions.",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#F97316" strokeWidth="2">
+                          <path d="M12 15a3 3 0 100-6 3 3 0 000 6z" />
+                          <path d="M19.4 15a1.65 1.65 0 00.33 1.82l.06.06a2 2 0 010 2.83 2 2 0 01-2.83 0l-.06-.06a1.65 1.65 0 00-1.82-.33 1.65 1.65 0 00-1 1.51V21a2 2 0 01-4 0v-.09A1.65 1.65 0 009 19.4a1.65 1.65 0 00-1.82.33l-.06.06a2 2 0 01-2.83-2.83l.06-.06A1.65 1.65 0 004.68 15a1.65 1.65 0 00-1.51-1H3a2 2 0 010-4h.09A1.65 1.65 0 004.6 9a1.65 1.65 0 00-.33-1.82l-.06-.06a2 2 0 012.83-2.83l.06.06A1.65 1.65 0 009 4.68a1.65 1.65 0 001-1.51V3a2 2 0 014 0v.09a1.65 1.65 0 001 1.51 1.65 1.65 0 001.82-.33l.06-.06a2 2 0 012.83 2.83l-.06.06A1.65 1.65 0 0019.4 9a1.65 1.65 0 001.51 1H21a2 2 0 010 4h-.09a1.65 1.65 0 00-1.51 1z" />
+                        </svg>
+                      ),
                     },
                     {
                       title: "Scope + acceptance criteria",
                       desc: "Defines what success looks like with testable outcomes and constraints.",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#F97316" strokeWidth="2">
+                          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2" />
+                          <rect x="9" y="3" width="6" height="4" rx="1" />
+                          <line x1="9" y1="12" x2="15" y2="12" />
+                          <line x1="9" y1="16" x2="13" y2="16" />
+                        </svg>
+                      ),
                     },
                     {
                       title: "Risk flags",
                       desc: "Surfaces common pitfalls: custom checkout, conflicting modules, and performance bottlenecks.",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#F97316" strokeWidth="2">
+                          <path d="M4 15s1-1 4-1 5 2 8 2 4-1 4-1V3s-1 1-4 1-5-2-8-2-4 1-4 1z" />
+                          <line x1="4" y1="22" x2="4" y2="15" />
+                        </svg>
+                      ),
                     },
                     {
                       title: "Faster estimates",
                       desc: "Developers can quote packages or hourly work with far fewer clarifying messages.",
+                      icon: (
+                        <svg viewBox="0 0 24 24" width="32" height="32" fill="none" stroke="#F97316" strokeWidth="2">
+                          <polygon points="13 2 3 14 12 14 11 22 21 10 12 10 13 2" />
+                        </svg>
+                      ),
                     },
                   ].map((c) => (
                     <div
                       key={c.title}
                       className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.55)]"
                     >
-                      <div className="h-10 w-10 rounded-2xl bg-orange-500/10 ring-1 ring-orange-200" />
+                      {c.icon}
                       <p className="mt-4 text-lg font-semibold text-zinc-900">
                         {c.title}
                       </p>

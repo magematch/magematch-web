@@ -1,4 +1,3 @@
-import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ChatWidget from "./components/ChatWidget";
 import "./globals.css";
@@ -13,13 +12,15 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata: Metadata = {
-  title: {
-    default: "MageMatch",
-    template: "%s | MageMatch",
-  },
+export const metadata = {
+  title: "MageMatch — Magento Developer Marketplace",
   description:
-    "MageMatch is a curated marketplace to hire trusted Adobe Commerce (Magento) developers — faster than Upwork, higher signal than Fiverr.",
+    "Find verified Adobe Commerce and Magento developers. Fixed prices, fast delivery.",
+  icons: {
+    icon: "/favicon.svg",
+    shortcut: "/favicon.svg",
+    apple: "/favicon.svg",
+  },
 };
 
 export default function RootLayout({

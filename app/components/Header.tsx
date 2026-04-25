@@ -1,16 +1,25 @@
+'use client';
+
 import Link from "next/link";
+import type { MouseEvent } from "react";
 
 const navItems: Array<{ href: string; label: string }> = [
   { href: "/developers", label: "Developers" },
+  { href: "/extensions", label: "Extensions" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
 ];
 
 export default function Header() {
+  const handleOpenChat = (event: MouseEvent<HTMLAnchorElement>) => {
+    event.preventDefault();
+    window.dispatchEvent(new Event('openChat'));
+  };
+
   return (
     <header className="sticky top-0 z-40 border-b border-zinc-200/60 bg-white/70 backdrop-blur-xl">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
-        <div className="flex h-[80px] items-center justify-between gap-4">
+        <div className="flex h-20 items-center justify-between gap-4">
           <Link
             href="/"
             className="inline-flex items-center gap-3 font-semibold tracking-tight text-zinc-900"
@@ -45,7 +54,8 @@ export default function Header() {
               Browse talent
             </Link>
             <Link
-              href="/developers/arjun-dhiman"
+              href="#chat"
+              onClick={handleOpenChat}
               className="inline-flex rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-orange-600/20 transition hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
             >
               Hire a Magento Expert
