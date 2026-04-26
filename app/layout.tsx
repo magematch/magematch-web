@@ -1,3 +1,4 @@
+import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
 import ChatWidget from "./components/ChatWidget";
 import "./globals.css";
@@ -12,10 +13,42 @@ const geistMono = Geist_Mono({
   subsets: ["latin"],
 });
 
-export const metadata = {
+export const metadata: Metadata = {
+  metadataBase: new URL("https://magematch.com"),
   title: "MageMatch — Magento Developer Marketplace",
   description:
     "Find verified Adobe Commerce and Magento developers. Fixed prices, fast delivery.",
+  applicationName: "MageMatch",
+  keywords: [
+    "magento developer",
+    "adobe commerce developer",
+    "hire magento developer europe",
+    "hire magento expert",
+    "hyva developer",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "MageMatch — Magento Developer Marketplace",
+    description:
+      "Find verified Adobe Commerce and Magento developers. Fixed prices, fast delivery.",
+    url: "/",
+    siteName: "MageMatch",
+    type: "website",
+    images: [
+      {
+        url: "/favicon.svg",
+      },
+    ],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "MageMatch — Magento Developer Marketplace",
+    description:
+      "Find verified Adobe Commerce and Magento developers. Fixed prices, fast delivery.",
+    images: ["/favicon.svg"],
+  },
   icons: {
     icon: "/favicon.svg",
     shortcut: "/favicon.svg",

@@ -6,8 +6,10 @@ import type { MouseEvent } from "react";
 const navItems: Array<{ href: string; label: string }> = [
   { href: "/developers", label: "Developers" },
   { href: "/extensions", label: "Extensions" },
+  { href: "/blog", label: "Blog" },
   { href: "/how-it-works", label: "How it works" },
   { href: "/about", label: "About" },
+  { href: "/contact", label: "Contact" },
 ];
 
 export default function Header() {

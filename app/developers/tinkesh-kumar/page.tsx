@@ -4,9 +4,35 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 export const metadata: Metadata = {
-  title: "Tinkesh Kumar — Magento 2 & NodeJS Developer",
+  title: "Tinkesh Kumar | Magento 2 & NodeJS Developer",
   description:
     "Hire Tinkesh Kumar — 7x Adobe Commerce Certified Magento 2 & NodeJS developer with 11+ years in custom development, payment gateways, and theme integration.",
+  keywords: [
+    "tinkesh kumar",
+    "magento 2 developer",
+    "adobe commerce certified developer",
+    "payment gateway magento expert",
+    "nodejs magento developer",
+  ],
+  alternates: {
+    canonical: "/developers/tinkesh-kumar",
+  },
+  openGraph: {
+    title: "Tinkesh Kumar | Magento 2 & NodeJS Developer",
+    description:
+      "Hire Tinkesh Kumar for Magento 2 custom development, payment gateway integrations, and Adobe Commerce delivery.",
+    url: "/developers/tinkesh-kumar",
+    siteName: "MageMatch",
+    type: "profile",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Tinkesh Kumar | Magento 2 & NodeJS Developer",
+    description:
+      "Hire Tinkesh Kumar for Magento 2 custom development, payment gateway integrations, and Adobe Commerce delivery.",
+    images: ["/favicon.svg"],
+  },
 };
 
 type ServicePackage = {

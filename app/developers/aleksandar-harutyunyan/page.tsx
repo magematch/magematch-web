@@ -4,9 +4,35 @@ import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 
 export const metadata: Metadata = {
-  title: "Aleksandar Harutyunyan — Adobe Commerce & SFCC Developer",
+  title: "Aleksandar Harutyunyan | Adobe Commerce & SFCC Developer",
   description:
     "Hire Aleksandar Harutyunyan — Adobe Commerce and Salesforce B2C Commerce developer with 20+ years of enterprise eCommerce experience.",
+  keywords: [
+    "aleksandar harutyunyan",
+    "adobe commerce developer",
+    "sfcc developer",
+    "magento migration expert",
+    "magento enterprise developer",
+  ],
+  alternates: {
+    canonical: "/developers/aleksandar-harutyunyan",
+  },
+  openGraph: {
+    title: "Aleksandar Harutyunyan | Adobe Commerce & SFCC Developer",
+    description:
+      "Hire Aleksandar Harutyunyan for Adobe Commerce, Magento migrations, Salesforce Commerce Cloud, and enterprise integrations.",
+    url: "/developers/aleksandar-harutyunyan",
+    siteName: "MageMatch",
+    type: "profile",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Aleksandar Harutyunyan | Adobe Commerce & SFCC Developer",
+    description:
+      "Hire Aleksandar Harutyunyan for Adobe Commerce, Magento migrations, Salesforce Commerce Cloud, and enterprise integrations.",
+    images: ["/favicon.svg"],
+  },
 };
 
 type ServicePackage = {

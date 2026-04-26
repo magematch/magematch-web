@@ -1,4 +1,5 @@
 import Groq from 'groq-sdk';
+import { sendBriefNotification, type BriefPayload } from '../../../lib/email';
 
 export const runtime = 'edge';
 
@@ -202,6 +203,166 @@ type ChatMessage = {
   content: string;
 };
 
+const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
+
+function getLastUserMessage(messages: ChatMessage[]) {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    if (messages[index].role === 'user') {
+      return messages[index].content;
+    }
+  }
+
+  return '';
+}
+
+function findEmailInUserMessages(messages: ChatMessage[]) {
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    if (messages[index].role !== 'user') {
+      continue;
+    }
+
+    const match = messages[index].content.match(EMAIL_REGEX);
+    if (match) {
+      return match[0].toLowerCase();
+    }
+  }
+
+  return null;
+}
+
+function findLatestAssistantBrief(messages: ChatMessage[], newAssistantMessage: string) {
+  if (/MAGEMATCH PROJECT BRIEF/i.test(newAssistantMessage)) {
+    return newAssistantMessage;
+  }
+
+  for (let index = messages.length - 1; index >= 0; index -= 1) {
+    const message = messages[index];
+    if (
+      message.role === 'assistant' &&
+      /MAGEMATCH PROJECT BRIEF/i.test(message.content)
+    ) {
+      return message.content;
+    }
+  }
+
+  return '';
+}
+
+function getField(briefText: string, pattern: RegExp) {
+  const match = briefText.match(pattern);
+  return match?.[1]?.trim() || 'Not provided';
+}
+
+function inferProblemTypeFromConversation(text: string) {
+  if (/checkout|payment|order|error|bug|broken/i.test(text)) {
+    return 'Bug Fix';
+  }
+  if (/hyv|frontend|theme|ui|ux/i.test(text)) {
+    return 'Theme/Frontend';
+  }
+  if (/speed|performance|core web vitals|lighthouse/i.test(text)) {
+    return 'Performance';
+  }
+  if (/upgrade|2\.4\.|version/i.test(text)) {
+    return 'Version Upgrade';
+  }
+  if (/integration|erp|pim|crm|gateway|shipping/i.test(text)) {
+    return 'Integration';
+  }
+  if (/headless|graphql|pwa|composable/i.test(text)) {
+    return 'Headless/Composable';
+  }
+
+  return 'General Magento Support';
+}
+
+function inferSpecialistSkills(text: string) {
+  const skills = [
+    { keyword: /hyv/i, label: 'Hyvä' },
+    { keyword: /graphql/i, label: 'GraphQL' },
+    { keyword: /headless|pwa|composable/i, label: 'Headless/PWA' },
+    { keyword: /salesforce/i, label: 'Salesforce' },
+    { keyword: /aws/i, label: 'AWS' },
+  ]
+    .filter((item) => item.keyword.test(text))
+    .map((item) => item.label);
+
+  return skills.length ? skills.join(', ') : 'Not specified';
+}
+
+function buildBriefPayload(messages: ChatMessage[], assistantMessage: string): BriefPayload {
+  const assistantBrief = findLatestAssistantBrief(messages, assistantMessage);
+  const userContext = messages
+    .filter((message) => message.role === 'user')
+    .map((message) => message.content)
+    .join('\n');
+  const mergedContext = `${assistantBrief}\n${userContext}`;
+
+  const recentUserDescription = messages
+    .filter((message) => message.role === 'user')
+    .slice(-3)
+    .map((message) => message.content)
+    .join(' ')
+    .trim();
+
+  return {
+    platform: getField(assistantBrief, /(?:🔧\s*)?Platform:\s*(.+)/i),
+    version: getField(assistantBrief, /(?:📦\s*)?Version:\s*(.+)/i),
+    problemType:
+      getField(assistantBrief, /(?:⚠️\s*)?Problem Type:\s*(.+)/i) ===
+      'Not provided'
+        ? inferProblemTypeFromConversation(mergedContext)
+        : getField(assistantBrief, /(?:⚠️\s*)?Problem Type:\s*(.+)/i),
+    description:
+      getField(assistantBrief, /(?:📝\s*)?Description:\s*(.+)/i) ===
+      'Not provided'
+        ? recentUserDescription || 'Not provided'
+        : getField(assistantBrief, /(?:📝\s*)?Description:\s*(.+)/i),
+    urgency: getField(assistantBrief, /(?:🚨\s*)?Urgency:\s*(.+)/i),
+    budget: getField(assistantBrief, /(?:💶\s*)?Budget:\s*(.+)/i),
+    specialistSkills:
+      getField(assistantBrief, /(?:⭐\s*)?Specialist Skills(?: Needed)?:\s*(.+)/i) ===
+      'Not provided'
+        ? inferSpecialistSkills(mergedContext)
+        : getField(
+            assistantBrief,
+            /(?:⭐\s*)?Specialist Skills(?: Needed)?:\s*(.+)/i
+          ),
+    timestamp: new Date().toISOString(),
+  };
+}
+
+function shouldTriggerNotifications(
+  messages: ChatMessage[],
+  assistantMessage: string,
+  merchantEmailFromLastMessage: string | null,
+  merchantEmailFromConversation: string | null
+) {
+  const previousAssistantMessages = messages
+    .filter((message) => message.role === 'assistant')
+    .map((message) => message.content)
+    .join('\n');
+
+  const briefCompletedThisTurn =
+    /✅\s*Perfect!\s*Your brief has been submitted/i.test(assistantMessage) ||
+    /Check your inbox at/i.test(assistantMessage);
+
+  const briefAlreadySubmittedPreviously =
+    /✅\s*Perfect!\s*Your brief has been submitted/i.test(
+      previousAssistantMessages
+    );
+
+  if (merchantEmailFromLastMessage) {
+    return true;
+  }
+
+  return (
+    Boolean(merchantEmailFromConversation) &&
+    briefCompletedThisTurn &&
+    !briefAlreadySubmittedPreviously
+  );
+}
+
 export async function POST(request: Request) {
   try {
     const { messages } = (await request.json()) as { messages: ChatMessage[] };
@@ -217,6 +378,29 @@ export async function POST(request: Request) {
     });
 
     const message = completion.choices[0]?.message?.content ?? '';
+
+    const lastUserMessage = getLastUserMessage(messages);
+    const merchantEmailFromLastMessage =
+      lastUserMessage.match(EMAIL_REGEX)?.[0]?.toLowerCase() ?? null;
+    const merchantEmailFromConversation = findEmailInUserMessages(messages);
+    const merchantEmail =
+      merchantEmailFromLastMessage ?? merchantEmailFromConversation;
+
+    if (
+      merchantEmail &&
+      shouldTriggerNotifications(
+        messages,
+        message,
+        merchantEmailFromLastMessage,
+        merchantEmailFromConversation
+      )
+    ) {
+      const brief = buildBriefPayload(messages, message);
+
+      sendBriefNotification(merchantEmail, brief).catch(() => {
+        return null;
+      });
+    }
 
     return Response.json({ message });
   } catch {

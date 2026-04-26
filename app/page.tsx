@@ -3,14 +3,53 @@ import Link from "next/link";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import { developers } from "./data/developers";
+import { getAllPosts } from "../lib/blog";
 
 export const metadata: Metadata = {
-  title: "Hire Magento developers",
+  title: "Hire Magento Developers in Europe | MageMatch",
   description:
     "Find trusted Adobe Commerce (Magento) developers. Vetted specialists for Magento 2, Hyvä, performance, headless, and custom builds.",
+  keywords: [
+    "hire magento developer",
+    "adobe commerce developer",
+    "magento 2 developer",
+    "hyva developer",
+    "magento freelancer europe",
+  ],
+  alternates: {
+    canonical: "/",
+  },
+  openGraph: {
+    title: "Hire Magento Developers in Europe | MageMatch",
+    description:
+      "Find trusted Adobe Commerce (Magento) developers for bug fixes, speed optimization, Hyvä, and custom development.",
+    url: "/",
+    siteName: "MageMatch",
+    type: "website",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Hire Magento Developers in Europe | MageMatch",
+    description:
+      "Find trusted Adobe Commerce (Magento) developers for bug fixes, speed optimization, Hyvä, and custom development.",
+    images: ["/favicon.svg"],
+  },
 };
 
 export default function Home() {
+  const latestPostsPromise = getAllPosts();
+
+  return <HomeContent latestPostsPromise={latestPostsPromise} />;
+}
+
+async function HomeContent({
+  latestPostsPromise,
+}: {
+  latestPostsPromise: ReturnType<typeof getAllPosts>;
+}) {
+  const latestPosts = (await latestPostsPromise).slice(0, 3);
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Header />
@@ -331,6 +370,55 @@ export default function Home() {
             <p className="mt-4 text-sm text-orange-100">
               No account needed · Free to use · Pay only when you hire
             </p>
+          </div>
+        </section>
+
+        <section className="bg-white">
+          <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
+            <div className="flex flex-wrap items-end justify-between gap-4">
+              <div>
+                <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
+                  Magento Guides & Tutorials
+                </h2>
+                <p className="mt-3 max-w-2xl text-base leading-7 text-zinc-600">
+                  Free resources from our certified developers
+                </p>
+              </div>
+              <Link
+                href="/blog"
+                className="text-sm font-semibold text-orange-700 hover:text-orange-800"
+              >
+                View all articles →
+              </Link>
+            </div>
+
+            <div className="mt-8 grid gap-6 lg:grid-cols-3">
+              {latestPosts.map((post) => (
+                <article
+                  key={post.slug}
+                  className="rounded-3xl border border-zinc-200 bg-white p-6 shadow-sm"
+                >
+                  <p className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-wide text-orange-700 ring-1 ring-orange-200">
+                    {post.tags[0] ?? "magento"}
+                  </p>
+                  <h3 className="mt-4 line-clamp-2 text-xl font-semibold leading-8 tracking-tight text-zinc-900">
+                    {post.title}
+                  </h3>
+                  <p className="mt-3 line-clamp-2 text-sm leading-6 text-zinc-600">
+                    {post.description}
+                  </p>
+                  <p className="mt-5 text-xs text-zinc-500">
+                    {new Date(post.date).toLocaleDateString()} · {post.readTime}
+                  </p>
+                  <Link
+                    href={`/blog/${post.slug}`}
+                    className="mt-4 inline-flex text-sm font-semibold text-orange-700 hover:text-orange-800"
+                  >
+                    Read more →
+                  </Link>
+                </article>
+              ))}
+            </div>
           </div>
         </section>
       </main>

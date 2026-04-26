@@ -6,9 +6,35 @@ import Header from "../components/Header";
 import { developers } from "../data/developers";
 
 export const metadata: Metadata = {
-  title: "Developers",
+  title: "Browse Magento Developers | MageMatch",
   description:
     "Browse vetted Adobe Commerce (Magento) developers by skill, price, and availability.",
+  keywords: [
+    "magento developers",
+    "adobe commerce developers",
+    "hire magento freelancer",
+    "hyva developer",
+    "magento experts europe",
+  ],
+  alternates: {
+    canonical: "/developers",
+  },
+  openGraph: {
+    title: "Browse Magento Developers | MageMatch",
+    description:
+      "Browse vetted Adobe Commerce and Magento developers by skills, budget, and availability.",
+    url: "/developers",
+    siteName: "MageMatch",
+    type: "website",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Browse Magento Developers | MageMatch",
+    description:
+      "Browse vetted Adobe Commerce and Magento developers by skills, budget, and availability.",
+    images: ["/favicon.svg"],
+  },
 };
 
 export default function DevelopersPage() {

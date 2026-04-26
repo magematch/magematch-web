@@ -39,6 +39,11 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link href="/blog" className="text-zinc-600 hover:text-zinc-900">
+                  Blog
+                </Link>
+              </li>
+              <li>
                 <Link href="/about" className="text-zinc-600 hover:text-zinc-900">
                   About
                 </Link>
@@ -58,6 +63,11 @@ export default function Footer() {
           <div>
             <p className="text-sm font-semibold text-zinc-900">Get in touch</p>
             <div className="mt-4 space-y-3 text-sm text-zinc-600">
+              <p>
+                <Link href="/contact" className="font-medium text-orange-600 hover:text-orange-700">
+                  Contact page →
+                </Link>
+              </p>
               <p className="flex items-center gap-2">
                 <svg viewBox="0 0 24 24" className="h-4 w-4 text-zinc-500" fill="none" stroke="currentColor" strokeWidth="2">
                   <path d="M4 6h16v12H4z" />

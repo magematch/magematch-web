@@ -4,9 +4,34 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 export const metadata: Metadata = {
-  title: "How it works",
+  title: "How MageMatch Works | Hire Magento Experts Fast",
   description:
     "Learn how MageMatch works for merchants and developers — including the AI brief builder and our pricing/commission model.",
+  keywords: [
+    "how magematch works",
+    "hire magento expert",
+    "magento developer matching",
+    "adobe commerce marketplace",
+  ],
+  alternates: {
+    canonical: "/how-it-works",
+  },
+  openGraph: {
+    title: "How MageMatch Works | Hire Magento Experts Fast",
+    description:
+      "See how MageMatch matches merchants with verified Adobe Commerce and Magento developers within 2 hours.",
+    url: "/how-it-works",
+    siteName: "MageMatch",
+    type: "website",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "How MageMatch Works | Hire Magento Experts Fast",
+    description:
+      "See how MageMatch matches merchants with verified Adobe Commerce and Magento developers within 2 hours.",
+    images: ["/favicon.svg"],
+  },
 };
 
 export default function HowItWorksPage() {

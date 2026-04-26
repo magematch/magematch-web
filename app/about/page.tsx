@@ -4,9 +4,34 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 export const metadata: Metadata = {
-  title: "About",
+  title: "About MageMatch | Magento Developer Marketplace",
   description:
     "MageMatch is a Magento-only marketplace built by a Magento developer, for Magento developers — helping merchants hire trusted Adobe Commerce specialists.",
+  keywords: [
+    "about magematch",
+    "magento developer marketplace",
+    "adobe commerce experts",
+    "hire magento developer europe",
+  ],
+  alternates: {
+    canonical: "/about",
+  },
+  openGraph: {
+    title: "About MageMatch | Magento Developer Marketplace",
+    description:
+      "Learn how MageMatch helps merchants hire vetted Adobe Commerce and Magento developers faster.",
+    url: "/about",
+    siteName: "MageMatch",
+    type: "website",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "About MageMatch | Magento Developer Marketplace",
+    description:
+      "Learn how MageMatch helps merchants hire vetted Adobe Commerce and Magento developers faster.",
+    images: ["/favicon.svg"],
+  },
 };
 
 export default function AboutPage() {

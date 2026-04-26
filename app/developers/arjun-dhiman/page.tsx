@@ -5,9 +5,35 @@ import Header from "../../components/Header";
 import { extensions } from "../../data/extensions";
 
 export const metadata: Metadata = {
-  title: "Arjun Dhiman — Adobe Commerce Certified Master",
+  title: "Arjun Dhiman | Adobe Commerce Certified Master",
   description:
     "Hire Arjun Dhiman — Adobe Commerce Certified Master with 13+ years in Magento 2, Hyvä, performance, GraphQL, headless commerce, and scalable architecture.",
+  keywords: [
+    "arjun dhiman",
+    "adobe commerce certified master",
+    "hire magento architect",
+    "hyva expert",
+    "magento performance consultant",
+  ],
+  alternates: {
+    canonical: "/developers/arjun-dhiman",
+  },
+  openGraph: {
+    title: "Arjun Dhiman | Adobe Commerce Certified Master",
+    description:
+      "Hire Arjun Dhiman for Magento architecture, Hyvä, performance, GraphQL, and enterprise Adobe Commerce delivery.",
+    url: "/developers/arjun-dhiman",
+    siteName: "MageMatch",
+    type: "profile",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Arjun Dhiman | Adobe Commerce Certified Master",
+    description:
+      "Hire Arjun Dhiman for Magento architecture, Hyvä, performance, GraphQL, and enterprise Adobe Commerce delivery.",
+    images: ["/favicon.svg"],
+  },
 };
 
 type ServicePackage = {

@@ -5,9 +5,34 @@ import Header from "../components/Header";
 import { extensions } from "../data/extensions";
 
 export const metadata: Metadata = {
-  title: "Free Magento Extensions",
+  title: "Free Magento Extensions | MageMatch",
   description:
     "Open-source Magento tools built by certified MageMatch developers. Free forever.",
+  keywords: [
+    "free magento extensions",
+    "open source magento modules",
+    "adobe commerce extensions",
+    "magento github modules",
+  ],
+  alternates: {
+    canonical: "/extensions",
+  },
+  openGraph: {
+    title: "Free Magento Extensions | MageMatch",
+    description:
+      "Explore open-source Magento extensions built by certified Adobe Commerce developers.",
+    url: "/extensions",
+    siteName: "MageMatch",
+    type: "website",
+    images: ["/favicon.svg"],
+  },
+  twitter: {
+    card: "summary_large_image",
+    title: "Free Magento Extensions | MageMatch",
+    description:
+      "Explore open-source Magento extensions built by certified Adobe Commerce developers.",
+    images: ["/favicon.svg"],
+  },
 };
 
 const compatibilityBadges = [
