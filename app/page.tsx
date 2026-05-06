@@ -1,14 +1,16 @@
 import type { Metadata } from "next";
 import Link from "next/link";
+import FeaturedExpertsSection from "./components/FeaturedExpertsSection";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
+import TrustSection from "./components/TrustSection";
 import { developers } from "./data/developers";
 import { getAllPosts } from "../lib/blog";
 
 export const metadata: Metadata = {
-  title: "Hire Magento Developers in Europe | MageMatch",
+  title: "Hire Trusted Magento & Adobe Commerce Experts Faster",
   description:
-    "Find trusted Adobe Commerce (Magento) developers. Vetted specialists for Magento 2, Hyvä, performance, headless, and custom builds.",
+    "Find developers, agencies, architects, Hyvä experts, and migration specialists in one trusted Magento and Adobe Commerce marketplace.",
   keywords: [
     "hire magento developer",
     "adobe commerce developer",
@@ -61,47 +63,50 @@ async function HomeContent({
             <div className="absolute -right-20 -bottom-24 h-72 w-72 rounded-full bg-zinc-900/10 blur-3xl sm:h-96 sm:w-96" />
           </div>
 
-          <div className="relative mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
-            <div className="grid items-start gap-12 lg:grid-cols-12">
+          <div className="relative mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28 lg:py-32">
+            <div className="grid items-start gap-14 lg:grid-cols-12">
               <div className="lg:col-span-5">
                 <p className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200">
-                  Curated marketplace for Adobe Commerce / Magento
+                  Niche marketplace for Magento & Adobe Commerce talent
                 </p>
-                <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
-                  Find a Trusted Magento Developer
+                <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-4xl lg:text-4xl">
+                  Hire Trusted Magento &amp; Adobe Commerce Experts Faster
                 </h1>
-                <p className="mt-5 max-w-xl text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
-                  Hire proven Magento 2 and Adobe Commerce experts for audits,
-                  bug fixes, Hyvä builds, headless commerce, and full store
-                  deliveries—without the noise of general freelancing platforms.
+                <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600 sm:text-xl sm:leading-9">
+                  Find developers, agencies, architects, Hyvä experts, and
+                  migration specialists in one trusted marketplace.
                 </p>
-                <p className="mt-3 text-sm font-semibold text-orange-600">
-                  ⚡ Average response time: 2 hours
+                <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-500 sm:text-base">
+                  Skip generic freelance platforms. MageMatch is built only for
+                  Magento and Adobe Commerce hiring, so you see relevant talent
+                  faster and shortlist with confidence.
                 </p>
 
-                <div className="mt-8 flex flex-col gap-3 sm:flex-row sm:items-center">
+                <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
                   <Link
                     href="/developers"
-                    className="inline-flex items-center justify-center rounded-full bg-orange-500 px-6 py-3 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+                    className="inline-flex items-center justify-center rounded-full bg-orange-500 px-7 py-3.5 text-sm font-semibold text-white shadow-sm hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
                   >
-                    Browse developers →
+                    Hire Experts
                   </Link>
-                  <Link
-                    href="/how-it-works"
-                    className="inline-flex items-center text-sm font-semibold text-zinc-700 hover:text-orange-700"
+                  <a
+                    href="mailto:hello@magematch.com?subject=Join%20MageMatch%20as%20Talent"
+                    className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-7 py-3.5 text-sm font-semibold text-zinc-800 shadow-sm shadow-zinc-900/5 transition hover:border-orange-200 hover:bg-orange-50 hover:text-orange-700 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
                   >
-                    How it works →
-                  </Link>
+                    Join as Talent
+                  </a>
                 </div>
-                <p className="mt-4 text-sm text-zinc-500">
-                  Built by Adobe Commerce Certified Masters
+
+                <p className="mt-5 text-sm font-semibold text-orange-600">
+                  ⚡ Merchants get matched with relevant talent within 2 hours
                 </p>
 
-                <div className="mt-12 grid max-w-xl grid-cols-2 gap-4 sm:grid-cols-3">
+                <div className="mt-12 grid max-w-2xl grid-cols-2 gap-4 sm:grid-cols-4">
                   {[
-                    { k: "Vetted talent", v: "Magento-only" },
-                    { k: "Fast starts", v: "Immediate availability" },
-                    { k: "Clear pricing", v: "Fixed packages from €99" },
+                    { k: "Magento-only", v: "No irrelevant profiles" },
+                    { k: "Trusted talent", v: "Developers, agencies, architects" },
+                    { k: "Specialist search", v: "Hyvä, migration, performance" },
+                    { k: "Fast shortlist", v: "Profiles + fixed quotes" },
                   ].map((s) => (
                     <div
                       key={s.k}
@@ -117,13 +122,46 @@ async function HomeContent({
               </div>
 
               <div className="lg:col-span-7">
-                <div className="rounded-3xl border border-zinc-200/70 bg-white p-5 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.5)] sm:p-6">
-                  <p className="text-sm font-semibold text-zinc-900">
-                    Featured developers
-                  </p>
-                  <p className="mt-1 text-sm text-zinc-600">
-                    Compare three verified Magento specialists and pick the best fit for your project.
-                  </p>
+                <div className="rounded-3xl border border-zinc-200/70 bg-white p-5 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.5)] sm:p-6 lg:p-7">
+                  <div className="flex flex-col gap-4 border-b border-zinc-200 pb-5 sm:flex-row sm:items-end sm:justify-between">
+                    <div>
+                      <p className="text-sm font-semibold text-zinc-900">
+                        Featured Magento talent
+                      </p>
+                      <p className="mt-1 text-sm text-zinc-600">
+                        See the type of specialists merchants hire through MageMatch.
+                      </p>
+                    </div>
+                    <div className="grid gap-2 text-xs text-zinc-600 sm:text-right">
+                      <span>✓ Adobe Commerce certified</span>
+                      <span>✓ EU-friendly response times</span>
+                    </div>
+                  </div>
+
+                  <div className="mt-5 grid gap-3 rounded-2xl bg-zinc-50 p-4 text-sm text-zinc-700 sm:grid-cols-3">
+                    <div>
+                      <p className="font-semibold text-zinc-900">Developers</p>
+                      <p className="mt-1">Hands-on Magento delivery and bug fixes.</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-zinc-900">Architects</p>
+                      <p className="mt-1">Complex builds, integrations, and technical leadership.</p>
+                    </div>
+                    <div>
+                      <p className="font-semibold text-zinc-900">Agencies</p>
+                      <p className="mt-1">Teams for migrations, rebuilds, and ongoing support.</p>
+                    </div>
+                  </div>
+
+                  <div className="mt-5">
+                    <p className="text-sm font-semibold text-zinc-900">
+                      Featured developers
+                    </p>
+                    <p className="mt-1 text-sm text-zinc-600">
+                      Compare verified Magento specialists and pick the best fit for your project.
+                    </p>
+                  </div>
+
                   <div className="mt-5 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
                     {developers.map((developer) => (
                       <article
@@ -213,15 +251,23 @@ async function HomeContent({
           </div>
         </section>
 
+        <FeaturedExpertsSection />
+
+        <TrustSection />
+
         <section className="bg-zinc-100/80">
           <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-              Why merchants choose MageMatch over Upwork
+              Why MageMatch converts faster than generic hiring platforms
             </h2>
+            <p className="mt-3 max-w-3xl text-base leading-7 text-zinc-600">
+              Every part of the marketplace is designed around Magento hiring:
+              better-fit talent, clearer briefs, and faster shortlists.
+            </p>
             <div className="mt-8 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
               <div className="grid grid-cols-2 border-b border-zinc-200">
                 <div className="bg-zinc-50 px-5 py-4 text-sm font-semibold text-zinc-900 sm:px-7">
-                  ❌ Upwork
+                  ❌ Generic platforms
                 </div>
                 <div className="bg-orange-50/70 px-5 py-4 text-sm font-semibold text-orange-700 sm:px-7">
                   ✅ MageMatch
@@ -229,10 +275,10 @@ async function HomeContent({
               </div>
               <div className="grid gap-y-0">
                 {[
-                  ["500 random developers", "Magento-only experts"],
-                  ["Hourly unknown costs", "Fixed price packages"],
-                  ["No vetting", "Adobe Certified only"],
-                  ["Race to the bottom prices", "Fair, transparent rates"],
+                  ["Mixed stack freelancers", "Magento & Adobe Commerce specialists only"],
+                  ["You write the brief alone", "AI-guided brief builder for faster matching"],
+                  ["Hard to find Hyvä / migration expertise", "Dedicated niche experts across Hyvä, upgrades, performance, and migrations"],
+                  ["Slow filtering and outreach", "Relevant profiles and quotes within 2 hours"],
                 ].map((row) => (
                   <div
                     key={row[0]}
@@ -250,10 +296,10 @@ async function HomeContent({
         <section className="bg-orange-50">
           <div className="mx-auto flex w-full max-w-6xl flex-col items-center justify-center gap-3 px-4 py-6 text-center sm:flex-row sm:gap-0 sm:px-6">
             {[
-              { value: "3", label: "Adobe Certified Developers" },
-              { value: "2hr", label: "Average Response" },
-              { value: "3", label: "Verified Experts" },
-              { value: "EU", label: "Timezone Coverage" },
+              { value: "Magento", label: "Niche-only marketplace" },
+              { value: "2hr", label: "Merchant response target" },
+              { value: "Hyvä", label: "Specialist talent available" },
+              { value: "EU", label: "Trusted timezone coverage" },
             ].map((item, index) => (
               <div key={item.label} className="flex items-center">
                 {index > 0 ? <span className="mx-4 hidden text-[#FED7AA] sm:inline">|</span> : null}
@@ -270,11 +316,11 @@ async function HomeContent({
           <div className="flex items-end justify-between gap-6">
             <div>
               <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-                How it works
+                How MageMatch works
               </h2>
               <p className="mt-3 max-w-2xl text-base leading-7 text-zinc-600">
-                Share your goals, get matched with Magento specialists, and
-                launch with confidence—fast.
+                From brief to shortlist, the flow is built to help merchants
+                understand, compare, and hire Magento talent faster.
               </p>
             </div>
             <Link
@@ -289,18 +335,18 @@ async function HomeContent({
             {[
               {
                 step: "01",
-                title: "Describe the work",
-                desc: "Use our brief builder to turn messy requirements into a clear Magento scope.",
+                title: "Submit a Magento-specific brief",
+                desc: "Tell us your platform, urgency, and project type so we can narrow the right specialist profile fast.",
               },
               {
                 step: "02",
-                title: "Meet vetted developers",
-                desc: "Browse specialists by skill, availability, and track record—Magento only.",
+                title: "Review matched experts",
+                desc: "Get relevant developers, agencies, or architects with the right Adobe Commerce, Hyvä, migration, or performance experience.",
               },
               {
                 step: "03",
-                title: "Start and ship",
-                desc: "Kick off quickly with developers from €40/hr and fixed packages from €99.",
+                title: "Hire with confidence",
+                desc: "Compare profiles, availability, and fixed-price options—then choose the talent that fits your store best.",
               },
             ].map((s) => (
               <div
@@ -322,18 +368,18 @@ async function HomeContent({
         <section className="bg-zinc-50">
           <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-              What store owners say
+              Trusted by Magento merchants who need answers fast
             </h2>
             <div className="mt-8 grid gap-6 lg:grid-cols-2">
               {[
                 {
                   quote:
-                    "Arjun fixed our checkout in 4 hours. We were losing €2,000/day in sales.",
+                    "We did not need a general freelancer. We needed a Magento specialist who understood the problem immediately — and MageMatch got us there fast.",
                   author: "Sarah M., Fashion Store Owner, Netherlands",
                 },
                 {
                   quote:
-                    "Finally a platform that understands Magento. No more explaining what Hyvä is.",
+                    "Finally a marketplace where Hyvä, Adobe Commerce, migrations, and performance are normal filters — not things we have to explain first.",
                   author: "Thomas K., B2B Store Manager, Germany",
                 },
               ].map((t) => (
@@ -354,21 +400,28 @@ async function HomeContent({
         <section className="bg-orange-500">
           <div className="mx-auto w-full max-w-6xl px-4 py-16 text-center sm:px-6 sm:py-20">
             <h2 className="text-3xl font-semibold tracking-tight text-white sm:text-4xl">
-              Ready to fix your Magento store?
+              Need Magento talent without the search friction?
             </h2>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-orange-50 sm:text-lg">
-              Get matched with a verified developer in under 2 hours.
+              Hire developers, agencies, architects, and specialists from one
+              trusted Magento marketplace.
             </p>
-            <div className="mt-8">
+            <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
                 href="/developers"
                 className="inline-flex items-center justify-center rounded-full bg-white px-7 py-3 text-sm font-semibold text-orange-600 shadow-sm transition hover:bg-orange-50"
               >
-                Start Free Match →
+                Hire Experts
               </Link>
+              <a
+                href="mailto:hello@magematch.com?subject=Join%20MageMatch%20as%20Talent"
+                className="inline-flex items-center justify-center rounded-full border border-white/40 px-7 py-3 text-sm font-semibold text-white transition hover:bg-white/10"
+              >
+                Join as Talent
+              </a>
             </div>
             <p className="mt-4 text-sm text-orange-100">
-              No account needed · Free to use · Pay only when you hire
+              Trusted niche marketplace · 2-hour matching goal · Magento-only focus
             </p>
           </div>
         </section>

@@ -7,6 +7,8 @@ export type Developer = {
   name: string;
   title: string;
   location: string;
+  country?: string;
+  expertType?: "Freelancer" | "Agency";
   availability: DeveloperAvailability | "Available";
   headline?: string;
   skills: string[];

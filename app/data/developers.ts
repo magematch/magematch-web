@@ -4,6 +4,8 @@ export const developers: Developer[] = [
   {
     slug: "arjun-dhiman",
     name: "Arjun Dhiman",
+    country: "Bulgaria",
+    expertType: "Freelancer",
     avatarInitials: "AD",
     avatarColor: "#F97316",
     badgeText: "🏆 Adobe Certified Master",
@@ -27,6 +29,8 @@ export const developers: Developer[] = [
   {
     slug: "tinkesh-kumar",
     name: "Tinkesh Kumar",
+    country: "India",
+    expertType: "Freelancer",
     avatarInitials: "TK",
     avatarColor: "#7C3AED",
     badgeText: "7x Adobe Certified",
@@ -41,6 +45,8 @@ export const developers: Developer[] = [
   {
     slug: "aleksandar-harutyunyan",
     name: "Aleksandar Harutyunyan",
+    country: "Bulgaria",
+    expertType: "Agency",
     avatarInitials: "AH",
     avatarColor: "#0D9488",
     badgeText: "Adobe + Salesforce Certified",

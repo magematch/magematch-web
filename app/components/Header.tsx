@@ -1,30 +1,28 @@
 'use client';
 
 import Link from "next/link";
-import type { MouseEvent } from "react";
+import { useState } from "react";
 
 const navItems: Array<{ href: string; label: string }> = [
-  { href: "/developers", label: "Developers" },
-  { href: "/extensions", label: "Extensions" },
-  { href: "/blog", label: "Blog" },
-  { href: "/how-it-works", label: "How it works" },
-  { href: "/about", label: "About" },
-  { href: "/contact", label: "Contact" },
+  { href: "/developers", label: "Hire Experts" },
+  { href: "/how-it-works", label: "Find Jobs" },
+  { href: "/developers", label: "Agencies" },
+  { href: "/developers", label: "Freelancers" },
+  { href: "/blog", label: "Resources" },
+  { href: "/how-it-works", label: "Pricing" },
 ];
 
 export default function Header() {
-  const handleOpenChat = (event: MouseEvent<HTMLAnchorElement>) => {
-    event.preventDefault();
-    window.dispatchEvent(new Event('openChat'));
-  };
+  const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   return (
-    <header className="sticky top-0 z-40 border-b border-zinc-200/60 bg-white/70 backdrop-blur-xl">
+    <header className="sticky top-0 z-50 border-b border-zinc-200/70 bg-white/80 shadow-[0_1px_0_0_rgba(15,23,42,0.03)] backdrop-blur-xl">
       <div className="mx-auto w-full max-w-6xl px-4 sm:px-6">
         <div className="flex h-20 items-center justify-between gap-4">
           <Link
             href="/"
             className="inline-flex items-center gap-3 font-semibold tracking-tight text-zinc-900"
+            onClick={() => setIsMobileMenuOpen(false)}
           >
             <span className="relative">
               <span className="pointer-events-none absolute -inset-1 rounded-2xl bg-orange-500/10 blur-md" />
@@ -36,10 +34,10 @@ export default function Header() {
             </span>
           </Link>
 
-          <nav className="hidden items-center gap-6 sm:flex">
+          <nav className="hidden items-center gap-6 lg:flex">
             {navItems.map((item) => (
               <Link
-                key={item.href}
+                key={`${item.label}-${item.href}`}
                 href={item.href}
                 className="text-sm font-medium text-zinc-700 transition hover:text-zinc-950"
               >
@@ -50,32 +48,64 @@ export default function Header() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/developers"
-              className="hidden rounded-full bg-white px-4 py-2 text-sm font-semibold text-zinc-800 ring-1 ring-zinc-200 shadow-sm shadow-zinc-900/5 transition hover:bg-zinc-50 sm:inline-flex"
+              href="/contact"
+              className="hidden rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/20 transition hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 sm:inline-flex"
             >
-              Browse talent
+              Join Marketplace
             </Link>
-            <Link
-              href="#chat"
-              onClick={handleOpenChat}
-              className="inline-flex rounded-full bg-orange-500 px-4 py-2 text-sm font-semibold text-white shadow-sm shadow-orange-600/20 transition hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2"
+
+            <button
+              type="button"
+              aria-label="Toggle navigation menu"
+              aria-expanded={isMobileMenuOpen}
+              onClick={() => setIsMobileMenuOpen((current) => !current)}
+              className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-zinc-200 bg-white text-zinc-700 transition hover:border-orange-200 hover:text-orange-700 lg:hidden"
             >
-              Hire a Magento Expert
-            </Link>
+              <span className="sr-only">Toggle mobile menu</span>
+              <svg
+                viewBox="0 0 24 24"
+                className="h-5 w-5"
+                fill="none"
+                stroke="currentColor"
+                strokeWidth="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                aria-hidden="true"
+              >
+                {isMobileMenuOpen ? (
+                  <path d="M18 6L6 18M6 6l12 12" />
+                ) : (
+                  <path d="M3 6h18M3 12h18M3 18h18" />
+                )}
+              </svg>
+            </button>
           </div>
         </div>
 
-        <div className="flex items-center justify-between gap-3 pb-3 sm:hidden">
-          {navItems.map((item) => (
+        {isMobileMenuOpen ? (
+          <div className="border-t border-zinc-200/80 pb-4 pt-4 lg:hidden">
+            <nav className="grid gap-1">
+              {navItems.map((item) => (
+                <Link
+                  key={`${item.label}-${item.href}-mobile`}
+                  href={item.href}
+                  onClick={() => setIsMobileMenuOpen(false)}
+                  className="rounded-xl px-3 py-2.5 text-sm font-medium text-zinc-700 transition hover:bg-zinc-50 hover:text-zinc-950"
+                >
+                  {item.label}
+                </Link>
+              ))}
+            </nav>
+
             <Link
-              key={item.href}
-              href={item.href}
-              className="text-sm font-medium text-zinc-700 transition hover:text-zinc-950"
+              href="/contact"
+              onClick={() => setIsMobileMenuOpen(false)}
+              className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
             >
-              {item.label}
+              Join Marketplace
             </Link>
-          ))}
-        </div>
+          </div>
+        ) : null}
       </div>
     </header>
   );

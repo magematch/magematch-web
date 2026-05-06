@@ -45,7 +45,7 @@ export default function AboutPage() {
             <p className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200">
               About MageMatch
             </p>
-            <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
               Built by a Magento developer, for Magento developers
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">

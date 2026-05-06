@@ -1,22 +1,23 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Contact MageMatch | Get Matched in 2 Hours",
+  title: "Hire Magento Experts | MageMatch Lead Form",
   description:
-    "Have a project in mind? Tell us about it and we'll match you with the right developer within 2 hours.",
+    "Submit your Magento or Adobe Commerce lead and get matched with relevant developers, architects, and specialists within 2 hours.",
   keywords: [
     "contact magematch",
     "hire magento developer",
     "adobe commerce support",
     "magento project brief",
+    "hire magento experts",
   ],
   alternates: {
     canonical: "/contact",
   },
   openGraph: {
-    title: "Contact MageMatch | Get Matched in 2 Hours",
+    title: "Hire Magento Experts | MageMatch Lead Form",
     description:
-      "Submit your Magento project brief and get matched with verified developers within 2 hours.",
+      "Submit your Magento project requirements and get matched with verified experts within 2 hours.",
     url: "/contact",
     siteName: "MageMatch",
     type: "website",
@@ -24,9 +25,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Contact MageMatch | Get Matched in 2 Hours",
+    title: "Hire Magento Experts | MageMatch Lead Form",
     description:
-      "Submit your Magento project brief and get matched with verified developers within 2 hours.",
+      "Submit your Magento project requirements and get matched with verified experts within 2 hours.",
     images: ["/favicon.svg"],
   },
 };
