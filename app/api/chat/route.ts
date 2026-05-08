@@ -1,5 +1,6 @@
 import Groq from 'groq-sdk';
 import { sendBriefNotification, type BriefPayload } from '../../../lib/email';
+import { supabaseAdmin } from '../../../lib/supabase';
 
 export const runtime = 'edge';
 
@@ -397,9 +398,30 @@ export async function POST(request: Request) {
     ) {
       const brief = buildBriefPayload(messages, message);
 
+      // Send email notification
       sendBriefNotification(merchantEmail, brief).catch(() => {
         return null;
       });
+
+      // Save brief to Supabase
+      try {
+        if (supabaseAdmin) {
+          await supabaseAdmin
+            .from('briefs')
+            .insert({
+              merchant_email: merchantEmail,
+              platform: brief.platform,
+              problem_type: brief.problemType,
+              description: brief.description,
+              urgency: brief.urgency,
+              budget: brief.budget,
+              specialist_skills: brief.specialistSkills,
+              full_conversation: messages,
+            });
+        }
+      } catch (err) {
+        console.error('Failed to save brief to Supabase:', err);
+      }
     }
 
     return Response.json({ message });

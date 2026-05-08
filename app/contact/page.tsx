@@ -6,6 +6,7 @@ import { useMemo, useState, type ChangeEvent, type FocusEvent, type FormEvent, t
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TrustSection from "../components/TrustSection";
+import { supabase } from "../../lib/supabase";
 
 type LeadFormValues = {
   name: string;
@@ -138,6 +139,27 @@ export default function ContactPage() {
       return;
     }
 
+    // Save to Supabase contacts table
+    try {
+      const { error: supabaseError } = await supabase
+        .from("contacts")
+        .insert({
+          name: values.name,
+          company: values.company,
+          email: values.email,
+          help: values.help,
+          budget: values.budget,
+          timeline: values.timeline,
+        });
+
+      if (supabaseError) {
+        console.error("Failed to save contact to Supabase:", supabaseError);
+      }
+    } catch (err) {
+      console.error("Error saving contact:", err);
+    }
+
+    // Submit to Formspree
     await handleSubmit(event);
   };
 

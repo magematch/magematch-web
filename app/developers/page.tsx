@@ -3,7 +3,8 @@ import Link from "next/link";
 import ExpertSearchPanel from "../components/ExpertSearchPanel";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { developers } from "../data/developers";
+import { supabase } from "../../lib/supabase";
+import type { Developer } from "../../lib/supabase-types";
 
 export const metadata: Metadata = {
   title: "Browse Magento Developers | MageMatch",
@@ -37,7 +38,23 @@ export const metadata: Metadata = {
   },
 };
 
-export default function DevelopersPage() {
+export default async function DevelopersPage() {
+  let developers: Developer[] = [];
+  let error = false;
+
+  try {
+    const { data, error: fetchError } = await supabase
+      .from("developers")
+      .select("*")
+      .eq("active", true)
+      .order("featured", { ascending: false });
+
+    if (fetchError) throw fetchError;
+    developers = data as Developer[];
+  } catch (err) {
+    console.error("Failed to fetch developers:", err);
+    error = true;
+  }
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Header />
@@ -62,7 +79,21 @@ export default function DevelopersPage() {
             </p>
           </div>
 
-          <ExpertSearchPanel developers={developers} />
+          {error ? (
+            <div className="mt-10 rounded-3xl border border-red-200 bg-red-50 p-6">
+              <p className="text-sm font-semibold text-red-900">
+                Unable to load developers. Please try again later.
+              </p>
+            </div>
+          ) : developers.length === 0 ? (
+            <div className="mt-10 rounded-3xl border border-yellow-200 bg-yellow-50 p-6">
+              <p className="text-sm font-semibold text-yellow-900">
+                No developers available at the moment. Check back soon.
+              </p>
+            </div>
+          ) : (
+            <ExpertSearchPanel developers={developers} />
+          )}
 
           <div className="mt-12 overflow-hidden rounded-3xl border border-orange-200/80 bg-linear-to-br from-orange-50 via-white to-white p-7 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.55)] sm:p-10">
             <div className="flex flex-col gap-4 sm:flex-row sm:items-center sm:justify-between">

@@ -2,7 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
-import { extensions } from "../data/extensions";
+import { supabase } from "../../lib/supabase";
 
 export const metadata: Metadata = {
   title: "Free Magento Extensions | MageMatch",
@@ -42,6 +42,45 @@ const compatibilityBadges = [
 ];
 
 export default function ExtensionsPage() {
+  const extensionsPromise = fetchExtensions();
+
+  return (
+    <ExtensionsPageContent extensionsPromise={extensionsPromise} />
+  );
+}
+
+type Extension = {
+  repo_url: string;
+  name: string;
+  description: string;
+  stars: number;
+  author_slug?: string;
+};
+
+async function fetchExtensions(): Promise<Extension[]> {
+  try {
+    const { data, error } = await supabase
+      .from("extensions")
+      .select("*")
+      .eq("active", true)
+      .order("stars", { ascending: false })
+      .order("name", { ascending: true });
+
+    if (error) throw error;
+    return (data as Extension[]) || [];
+  } catch (err) {
+    console.error("Failed to fetch extensions:", err);
+    return [];
+  }
+}
+
+async function ExtensionsPageContent({
+  extensionsPromise,
+}: {
+  extensionsPromise: Promise<Extension[]>;
+}) {
+  const extensions = await extensionsPromise;
+
   return (
     <div className="flex min-h-full flex-1 flex-col">
       <Header />
@@ -65,7 +104,7 @@ export default function ExtensionsPage() {
           <div className="grid gap-6 lg:grid-cols-2">
             {extensions.map((extension) => (
               <article
-                key={extension.repoUrl}
+                key={extension.repo_url}
                 className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.45)]"
               >
                 <div className="flex items-start justify-between gap-4">
@@ -96,7 +135,11 @@ export default function ExtensionsPage() {
                 <p className="mt-4 text-sm text-zinc-600">
                   Built by{" "}
                   <Link
-                    href="/developers/arjun-dhiman"
+                    href={
+                      extension.author_slug
+                        ? `/developers/${extension.author_slug}`
+                        : "/developers/arjun-dhiman"
+                    }
                     className="font-semibold text-orange-700 hover:text-orange-800"
                   >
                     Arjun Dhiman
@@ -105,7 +148,7 @@ export default function ExtensionsPage() {
 
                 <div className="mt-5 flex flex-wrap items-center gap-3">
                   <a
-                    href={extension.repoUrl}
+                    href={extension.repo_url}
                     target="_blank"
                     rel="noreferrer"
                     className="inline-flex items-center justify-center rounded-full bg-zinc-900 px-4 py-2 text-sm font-semibold text-white transition hover:bg-zinc-800"

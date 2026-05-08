@@ -4,8 +4,13 @@ import FeaturedExpertsSection from "./components/FeaturedExpertsSection";
 import Footer from "./components/Footer";
 import Header from "./components/Header";
 import TrustSection from "./components/TrustSection";
-import { developers } from "./data/developers";
-import { getAllPosts } from "../lib/blog";
+import { supabase } from "../lib/supabase";
+import {
+  normalizeBlogPost,
+  type BlogPost,
+  type Developer,
+  type RawBlogPost,
+} from "../lib/supabase-types";
 
 export const metadata: Metadata = {
   title: "Hire Trusted Magento & Adobe Commerce Experts Faster",
@@ -40,17 +45,60 @@ export const metadata: Metadata = {
 };
 
 export default function Home() {
-  const latestPostsPromise = getAllPosts();
+  const latestPostsPromise = fetchLatestPosts();
+  const featuredDevelopersPromise = fetchFeaturedDevelopers();
 
-  return <HomeContent latestPostsPromise={latestPostsPromise} />;
+  return (
+    <HomeContent
+      latestPostsPromise={latestPostsPromise}
+      featuredDevelopersPromise={featuredDevelopersPromise}
+    />
+  );
+}
+
+async function fetchLatestPosts(): Promise<BlogPost[]> {
+  try {
+    const { data, error } = await supabase
+      .from("posts")
+      .select("*")
+      .eq("published", true)
+      .order("created_at", { ascending: false })
+      .limit(3);
+
+    if (error) throw error;
+    return ((data as RawBlogPost[]) || []).map(normalizeBlogPost);
+  } catch (err) {
+    console.error("Failed to fetch latest posts:", err);
+    return [];
+  }
+}
+
+async function fetchFeaturedDevelopers(): Promise<Developer[]> {
+  try {
+    const { data, error } = await supabase
+      .from("developers")
+      .select("*")
+      .eq("featured", true)
+      .eq("active", true)
+      .limit(3);
+
+    if (error) throw error;
+    return (data as Developer[]) || [];
+  } catch (err) {
+    console.error("Failed to fetch featured developers:", err);
+    return [];
+  }
 }
 
 async function HomeContent({
   latestPostsPromise,
+  featuredDevelopersPromise,
 }: {
-  latestPostsPromise: ReturnType<typeof getAllPosts>;
+  latestPostsPromise: Promise<BlogPost[]>;
+  featuredDevelopersPromise: Promise<Developer[]>;
 }) {
-  const latestPosts = (await latestPostsPromise).slice(0, 3);
+  const latestPosts = await latestPostsPromise;
+  const featuredDevelopers = await featuredDevelopersPromise;
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
@@ -163,7 +211,7 @@ async function HomeContent({
                   </div>
 
                   <div className="mt-5 grid items-stretch gap-4 sm:grid-cols-2 xl:grid-cols-3">
-                    {developers.map((developer) => (
+                    {featuredDevelopers.map((developer) => (
                       <article
                         key={developer.slug}
                         className="h-full rounded-2xl border border-zinc-200 bg-white p-4 shadow-sm"
@@ -178,7 +226,7 @@ async function HomeContent({
                                 developer.name
                                   .split(" ")
                                   .slice(0, 2)
-                                  .map((part) => part[0])
+                                  .map((part: string) => part[0])
                                   .join("")}
                             </div>
 
@@ -215,7 +263,7 @@ async function HomeContent({
                           </div>
 
                           <div className="mt-2 flex flex-wrap gap-1.5">
-                            {developer.skills.slice(0, 3).map((skill) => (
+                            {developer.skills.slice(0, 3).map((skill: string) => (
                               <span
                                 key={skill}
                                 className="rounded-full bg-zinc-50 px-2 py-0.5 text-[11px] font-medium text-zinc-700 ring-1 ring-zinc-200"
@@ -251,7 +299,7 @@ async function HomeContent({
           </div>
         </section>
 
-        <FeaturedExpertsSection />
+        <FeaturedExpertsSection developers={featuredDevelopers} />
 
         <TrustSection />
 
@@ -461,7 +509,7 @@ async function HomeContent({
                     {post.description}
                   </p>
                   <p className="mt-5 text-xs text-zinc-500">
-                    {new Date(post.date).toLocaleDateString()} · {post.readTime}
+                    {new Date(post.date || post.created_at || new Date()).toLocaleDateString()} · {post.readTime}
                   </p>
                   <Link
                     href={`/blog/${post.slug}`}

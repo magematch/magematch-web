@@ -1,6 +1,5 @@
 import Link from "next/link";
-
-import { developers } from "../data/developers";
+import type { Developer } from "../../lib/supabase-types";
 
 type FeaturedExpert = {
   name: string;
@@ -14,40 +13,8 @@ type FeaturedExpert = {
   badge: string;
 };
 
-const featuredExperts: FeaturedExpert[] = [
-  {
-    name: developers[0].name,
-    title: developers[0].title,
-    skills: developers[0].skills.slice(0, 4),
-    country: "Bulgaria",
-    availability: developers[0].availability,
-    href: `/developers/${developers[0].slug}`,
-    avatarInitials: developers[0].avatarInitials ?? "AD",
-    avatarColor: developers[0].avatarColor ?? "#F97316",
-    badge: "Adobe Commerce Master",
-  },
-  {
-    name: developers[1].name,
-    title: developers[1].title,
-    skills: developers[1].skills.slice(0, 4),
-    country: "India",
-    availability: developers[1].availability,
-    href: `/developers/${developers[1].slug}`,
-    avatarInitials: developers[1].avatarInitials ?? "TK",
-    avatarColor: developers[1].avatarColor ?? "#7C3AED",
-    badge: "7x Adobe Certified",
-  },
-  {
-    name: developers[2].name,
-    title: developers[2].title,
-    skills: developers[2].skills.slice(0, 4),
-    country: "Bulgaria",
-    availability: developers[2].availability,
-    href: `/developers/${developers[2].slug}`,
-    avatarInitials: developers[2].avatarInitials ?? "AH",
-    avatarColor: developers[2].avatarColor ?? "#0D9488",
-    badge: "Enterprise Commerce Lead",
-  },
+// Curated marketplace profiles shown when limited database results
+const marketplaceExperts: FeaturedExpert[] = [
   {
     name: "Elena Petrova",
     title: "Hyvä Frontend Specialist | Theme Builds & UX Optimization",
@@ -83,7 +50,31 @@ const featuredExperts: FeaturedExpert[] = [
   },
 ];
 
-export default function FeaturedExpertsSection() {
+type FeaturedExpertsSectionProps = {
+  developers?: Developer[];
+};
+
+export default function FeaturedExpertsSection({
+  developers = [],
+}: FeaturedExpertsSectionProps) {
+  // Convert database developers to featured experts format
+  const dbExperts: FeaturedExpert[] = developers.slice(0, 3).map((dev) => ({
+    name: dev.name,
+    title: dev.title,
+    skills: dev.skills.slice(0, 4),
+    country: dev.country,
+    availability: dev.availability as "Immediate" | "Available" | "This week" | "Next week",
+    href: `/developers/${dev.slug}`,
+    avatarInitials: dev.avatarInitials,
+    avatarColor: dev.avatarColor,
+    badge: dev.badgeText,
+  }));
+
+  // Combine database experts with marketplace profiles
+  const featuredExperts: FeaturedExpert[] = [
+    ...dbExperts,
+    ...marketplaceExperts.slice(0, Math.max(0, 6 - dbExperts.length)),
+  ];
   return (
     <section className="bg-white">
       <div className="mx-auto w-full max-w-6xl px-4 py-16 sm:px-6 lg:py-20">
