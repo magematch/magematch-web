@@ -1,6 +1,5 @@
 "use client";
 
-import { useForm } from "@formspree/react";
 import Link from "next/link";
 import { useMemo, useState, type ChangeEvent, type FocusEvent, type FormEvent, type MouseEvent } from "react";
 import Footer from "../components/Footer";
@@ -10,9 +9,11 @@ import { supabase } from "../../lib/supabase";
 
 type LeadFormValues = {
   name: string;
-  company: string;
   email: string;
+  storeUrl?: string;
+  platform: string;
   help: string;
+  screenshot?: File | null;
   budget: string;
   timeline: string;
 };
@@ -21,14 +22,14 @@ type LeadFormErrors = Partial<Record<keyof LeadFormValues, string>>;
 
 const initialValues: LeadFormValues = {
   name: "",
-  company: "",
   email: "",
+  storeUrl: "",
+  platform: "",
   help: "",
+  screenshot: null,
   budget: "",
   timeline: "",
 };
-
-const formId = process.env.NEXT_PUBLIC_FORMSPREE_FORM_ID || "FORMSPREE_ID";
 
 function validateLeadForm(values: LeadFormValues): LeadFormErrors {
   const errors: LeadFormErrors = {};
@@ -39,8 +40,8 @@ function validateLeadForm(values: LeadFormValues): LeadFormErrors {
     errors.name = "Name should be at least 2 characters.";
   }
 
-  if (!values.company.trim()) {
-    errors.company = "Please enter your company name.";
+  if (!values.platform) {
+    errors.platform = "Please select your platform.";
   }
 
   if (!values.email.trim()) {
@@ -67,11 +68,11 @@ function validateLeadForm(values: LeadFormValues): LeadFormErrors {
 }
 
 export default function ContactPage() {
-  const [state, handleSubmit] = useForm(formId);
   const [values, setValues] = useState<LeadFormValues>(initialValues);
   const [errors, setErrors] = useState<LeadFormErrors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof LeadFormValues, boolean>>>({});
-
+  const [submitted, setSubmitted] = useState(false);
+  const [loading, setLoading] = useState(false);
   const openChatMatcher = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
     window.dispatchEvent(new Event("openChat"));
@@ -122,13 +123,15 @@ export default function ContactPage() {
 
   const handleLeadSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
+    setLoading(true);
 
     const nextErrors = validateLeadForm(values);
 
     setTouched({
       name: true,
-      company: true,
       email: true,
+      storeUrl: true,
+      platform: true,
       help: true,
       budget: true,
       timeline: true,
@@ -136,6 +139,7 @@ export default function ContactPage() {
     setErrors(nextErrors);
 
     if (Object.keys(nextErrors).length > 0) {
+      setLoading(false);
       return;
     }
 
@@ -145,22 +149,31 @@ export default function ContactPage() {
         .from("contacts")
         .insert({
           name: values.name,
-          company: values.company,
           email: values.email,
-          help: values.help,
+          store_url: values.storeUrl || null,
+          platform: values.platform,
+          message: values.help,
           budget: values.budget,
-          timeline: values.timeline,
+          status: "new",
+          notes: `Timeline: ${values.timeline}`,
         });
 
       if (supabaseError) {
         console.error("Failed to save contact to Supabase:", supabaseError);
+        alert("Failed to submit form. Please try again.");
+      } else {
+        console.log("Contact saved to Supabase successfully");
+        setSubmitted(true);
+        setValues(initialValues);
+        setErrors({});
+        setTouched({});
       }
     } catch (err) {
       console.error("Error saving contact:", err);
+      alert("An error occurred. Please try again.");
+    } finally {
+      setLoading(false);
     }
-
-    // Submit to Formspree
-    await handleSubmit(event);
   };
 
   const inputClassName =
@@ -169,7 +182,7 @@ export default function ContactPage() {
   const fieldClassName = (field: keyof LeadFormValues) =>
     `${inputClassName} ${visibleErrors[field] ? "border-red-300 bg-red-50/40" : "border-zinc-300 bg-white"}`;
 
-  if (state.succeeded) {
+  if (submitted) {
     return (
       <div className="flex min-h-full flex-1 flex-col">
         <Header />
@@ -268,7 +281,7 @@ export default function ContactPage() {
                     Hire Magento Experts
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-zinc-600 sm:text-base">
-                    Submit your lead and we’ll use the current MageMatch Formspree pipeline to capture and route it.
+                    Share your project details and we'll match you with the right Magento expert for your needs.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700 ring-1 ring-zinc-200">
@@ -277,52 +290,77 @@ export default function ContactPage() {
               </div>
 
               <form onSubmit={handleLeadSubmit} className="mt-6 space-y-5" noValidate>
-                <input type="hidden" name="_subject" value="New MageMatch lead form submission" />
-                <input type="hidden" name="source" value="hire-magento-experts-contact-page" />
+
+                <div>
+                  <label htmlFor="name" className="text-sm font-semibold text-zinc-900">
+                    Name *
+                  </label>
+                  <input
+                    id="name"
+                    name="name"
+                    value={values.name}
+                    onChange={handleFieldChange}
+                    onBlur={handleFieldBlur}
+                    autoComplete="name"
+                    className={fieldClassName("name")}
+                    placeholder="Your full name"
+                    aria-invalid={Boolean(visibleErrors.name)}
+                    aria-describedby={visibleErrors.name ? "name-error" : undefined}
+                  />
+                  {visibleErrors.name ? (
+                    <p id="name-error" className="mt-2 text-sm text-red-600">
+                      {visibleErrors.name}
+                    </p>
+                  ) : null}
+                </div>
 
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
-                    <label htmlFor="name" className="text-sm font-semibold text-zinc-900">
-                      Name *
+                    <label htmlFor="storeUrl" className="text-sm font-semibold text-zinc-900">
+                      Store URL
                     </label>
                     <input
-                      id="name"
-                      name="name"
-                      value={values.name}
+                      id="storeUrl"
+                      name="storeUrl"
+                      type="url"
+                      value={values.storeUrl}
                       onChange={handleFieldChange}
                       onBlur={handleFieldBlur}
-                      autoComplete="name"
-                      className={fieldClassName("name")}
-                      placeholder="Your full name"
-                      aria-invalid={Boolean(visibleErrors.name)}
-                      aria-describedby={visibleErrors.name ? "name-error" : undefined}
+                      autoComplete="url"
+                      className={fieldClassName("storeUrl")}
+                      placeholder="https://yourstore.com"
+                      aria-invalid={Boolean(visibleErrors.storeUrl)}
+                      aria-describedby={visibleErrors.storeUrl ? "storeUrl-error" : undefined}
                     />
-                    {visibleErrors.name ? (
-                      <p id="name-error" className="mt-2 text-sm text-red-600">
-                        {visibleErrors.name}
+                    {visibleErrors.storeUrl ? (
+                      <p id="storeUrl-error" className="mt-2 text-sm text-red-600">
+                        {visibleErrors.storeUrl}
                       </p>
                     ) : null}
                   </div>
 
                   <div>
-                    <label htmlFor="company" className="text-sm font-semibold text-zinc-900">
-                      Company *
+                    <label htmlFor="platform" className="text-sm font-semibold text-zinc-900">
+                      Platform *
                     </label>
-                    <input
-                      id="company"
-                      name="company"
-                      value={values.company}
+                    <select
+                      id="platform"
+                      name="platform"
+                      value={values.platform}
                       onChange={handleFieldChange}
                       onBlur={handleFieldBlur}
-                      autoComplete="organization"
-                      className={fieldClassName("company")}
-                      placeholder="Your company name"
-                      aria-invalid={Boolean(visibleErrors.company)}
-                      aria-describedby={visibleErrors.company ? "company-error" : undefined}
-                    />
-                    {visibleErrors.company ? (
-                      <p id="company-error" className="mt-2 text-sm text-red-600">
-                        {visibleErrors.company}
+                      className={fieldClassName("platform")}
+                      aria-invalid={Boolean(visibleErrors.platform)}
+                      aria-describedby={visibleErrors.platform ? "platform-error" : undefined}
+                    >
+                      <option value="">Select your platform</option>
+                      <option>Magento 1</option>
+                      <option>Magento 2</option>
+                      <option>Adobe Commerce</option>
+                    </select>
+                    {visibleErrors.platform ? (
+                      <p id="platform-error" className="mt-2 text-sm text-red-600">
+                        {visibleErrors.platform}
                       </p>
                     ) : null}
                   </div>
@@ -379,6 +417,27 @@ export default function ContactPage() {
                   ) : null}
                 </div>
 
+                <div>
+                  <label htmlFor="screenshot" className="text-sm font-semibold text-zinc-900">
+                    Upload error screenshot (optional)
+                  </label>
+                  <input
+                    id="screenshot"
+                    name="screenshot"
+                    type="file"
+                    accept="image/*"
+                    onChange={(e) => {
+                      const file = e.target.files?.[0] || null;
+                      setValues((current) => ({
+                        ...current,
+                        screenshot: file,
+                      }));
+                    }}
+                    className="mt-2 w-full rounded-2xl border border-zinc-300 bg-white px-4 py-3.5 text-sm text-zinc-900 outline-none ring-orange-500 transition placeholder:text-zinc-400 focus:ring-2"
+                  />
+                  <p className="mt-2 text-xs text-zinc-500">Max 5MB. PNG, JPG, or GIF.</p>
+                </div>
+
                 <div className="grid gap-5 sm:grid-cols-2">
                   <div>
                     <label htmlFor="budget" className="text-sm font-semibold text-zinc-900">
@@ -395,7 +454,8 @@ export default function ContactPage() {
                       aria-describedby={visibleErrors.budget ? "budget-error" : undefined}
                     >
                       <option value="">Select your budget range</option>
-                      <option>Under €2,000</option>
+                      <option>€200 – €1,000</option>
+                      <option>€1,000 – €2,000</option>
                       <option>€2,000 – €5,000</option>
                       <option>€5,000 – €15,000</option>
                       <option>€15,000+</option>
@@ -437,22 +497,16 @@ export default function ContactPage() {
                   </div>
                 </div>
 
-                {state.errors ? (
-                  <div className="rounded-2xl border border-red-200 bg-red-50 px-4 py-3 text-sm text-red-700">
-                    Something went wrong while sending your lead. Please try again or email hello@magematch.com.
-                  </div>
-                ) : null}
-
                 <div className="flex flex-col gap-4 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-sm leading-6 text-zinc-500">
                     By submitting this form, you’re asking MageMatch to route your request to relevant Magento experts.
                   </p>
                   <button
                     type="submit"
-                    disabled={state.submitting}
-                    className="inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
+                    disabled={loading}
+                    className="inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-6 py-3.5 text-sm font-semibold text-white transition cursor-pointer hover:bg-orange-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
                   >
-                    {state.submitting ? "Sending..." : "Get Matched with Experts"}
+                    {loading ? "Sending..." : "Get Matched with Experts"}
                   </button>
                 </div>
               </form>
