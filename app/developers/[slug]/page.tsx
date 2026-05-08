@@ -6,6 +6,8 @@ import Header from "../../components/Header";
 import { supabase } from "../../../lib/supabase";
 import type { Developer } from "../../../lib/supabase-types";
 
+export const runtime = "edge";
+
 type DeveloperProfilePageProps = {
   params: Promise<{
     slug: string;

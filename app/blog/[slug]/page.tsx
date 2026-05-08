@@ -11,6 +11,8 @@ import {
 } from "../../../lib/supabase-types";
 import ReadingProgress from "./ReadingProgress";
 
+export const runtime = "edge";
+
 type BlogPostPageProps = {
   params: Promise<{
     slug: string;
