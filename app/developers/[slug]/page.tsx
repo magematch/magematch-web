@@ -3,6 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
+import { PersonJsonLd } from "../../components/JsonLd";
 import { supabase } from "../../../lib/supabase";
 import type { Developer } from "../../../lib/supabase-types";
 
@@ -40,21 +41,21 @@ export async function generateMetadata(
       ...developer.skills,
     ],
     alternates: {
-      canonical: `/developers/${developer.slug}`,
+      canonical: `https://magematch.com/developers/${developer.slug}`,
     },
     openGraph: {
       title: `${developer.name} | MageMatch`,
       description: developer.headline,
-      url: `/developers/${developer.slug}`,
+      url: `https://magematch.com/developers/${developer.slug}`,
       siteName: "MageMatch",
       type: "profile",
-      images: ["/favicon.svg"],
+      images: ["/opengraph-image"],
     },
     twitter: {
       card: "summary_large_image",
       title: `${developer.name} | MageMatch`,
       description: developer.headline,
-      images: ["/favicon.svg"],
+      images: ["/opengraph-image"],
     },
   };
 }
@@ -91,6 +92,15 @@ export default async function DeveloperProfilePage(
 
   return (
     <div className="flex min-h-full flex-1 flex-col">
+      <PersonJsonLd
+        developer={{
+          name: developer.name,
+          title: developer.title,
+          headline: developer.headline,
+          slug: developer.slug,
+          skills: developer.skills,
+        }}
+      />
       <Header />
 
       <main className="flex-1 bg-zinc-50">

@@ -4,7 +4,7 @@ export default function Footer() {
   return (
     <footer className="border-t border-zinc-200 bg-white">
       <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6">
-        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-4">
+        <div className="grid gap-10 sm:grid-cols-2 lg:grid-cols-5">
           <div>
             <Link href="/" className="inline-flex items-center gap-2">
               <img
@@ -39,6 +39,14 @@ export default function Footer() {
                 </Link>
               </li>
               <li>
+                <Link
+                  href="/pricing"
+                  className="text-zinc-600 hover:text-zinc-900"
+                >
+                  Pricing
+                </Link>
+              </li>
+              <li>
                 <Link href="/blog" className="text-zinc-600 hover:text-zinc-900">
                   Blog
                 </Link>
@@ -52,11 +60,44 @@ export default function Footer() {
           </div>
 
           <div>
-            <p className="text-sm font-semibold text-zinc-900">For merchants</p>
+            <p className="text-sm font-semibold text-zinc-900">For Developers</p>
             <ul className="mt-4 space-y-3 text-sm">
-              <li className="text-zinc-600">Magento 2 & Adobe Commerce</li>
-              <li className="text-zinc-600">Hyvä & headless builds</li>
-              <li className="text-zinc-600">Performance & audits</li>
+              <li>
+                <Link href="/apply" className="text-zinc-600 hover:text-zinc-900">
+                  Apply as a Developer
+                </Link>
+              </li>
+              <li>
+                <Link href="/developers" className="text-zinc-600 hover:text-zinc-900">
+                  Browse Developers
+                </Link>
+              </li>
+              <li>
+                <Link href="/pricing" className="text-zinc-600 hover:text-zinc-900">
+                  Pricing & Commission
+                </Link>
+              </li>
+            </ul>
+          </div>
+
+          <div>
+            <p className="text-sm font-semibold text-zinc-900">Extensions</p>
+            <ul className="mt-4 space-y-3 text-sm">
+              <li>
+                <Link href="/extensions" className="text-zinc-600 hover:text-zinc-900">
+                  Browse Extensions
+                </Link>
+              </li>
+              <li>
+                <Link href="/extensions" className="text-zinc-600 hover:text-zinc-900">
+                  Open Source Tools
+                </Link>
+              </li>
+              <li>
+                <Link href="/extensions" className="text-zinc-600 hover:text-zinc-900">
+                  Magento Modules
+                </Link>
+              </li>
             </ul>
           </div>
 

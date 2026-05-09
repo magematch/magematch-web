@@ -1,5 +1,5 @@
 import Groq from 'groq-sdk';
-import { sendBriefNotification, type BriefPayload } from '../../../lib/email';
+import { sendBriefNotification } from '../../../lib/email';
 import { supabaseAdmin } from '../../../lib/supabase';
 
 export const runtime = 'edge';
@@ -204,6 +204,17 @@ type ChatMessage = {
   content: string;
 };
 
+type BriefPayload = {
+  platform: string;
+  version: string;
+  problemType: string;
+  description: string;
+  urgency: string;
+  budget: string;
+  specialistSkills: string;
+  timestamp: string;
+};
+
 const EMAIL_REGEX = /[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}/;
 
 function getLastUserMessage(messages: ChatMessage[]) {
@@ -399,7 +410,15 @@ export async function POST(request: Request) {
       const brief = buildBriefPayload(messages, message);
 
       // Send email notification
-      sendBriefNotification(merchantEmail, brief).catch(() => {
+      sendBriefNotification({
+        merchant_email: merchantEmail,
+        platform: brief.platform,
+        problem_type: brief.problemType,
+        urgency: brief.urgency,
+        budget: brief.budget,
+        description: brief.description,
+        specialist_skills: brief.specialistSkills,
+      }).catch(() => {
         return null;
       });
 

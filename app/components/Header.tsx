@@ -5,11 +5,10 @@ import { useState } from "react";
 
 const navItems: Array<{ href: string; label: string }> = [
   { href: "/developers", label: "Hire Experts" },
-  { href: "/how-it-works", label: "Find Jobs" },
-  { href: "/developers", label: "Agencies" },
-  { href: "/developers", label: "Freelancers" },
-  { href: "/blog", label: "Resources" },
-  { href: "/how-it-works", label: "Pricing" },
+  { href: "/apply", label: "List Your Services" },
+  { href: "/pricing", label: "Pricing" },
+  { href: "/how-it-works", label: "How It Works" },
+  { href: "/about", label: "About" },
 ];
 
 export default function Header() {
@@ -48,10 +47,10 @@ export default function Header() {
 
           <div className="flex items-center gap-3">
             <Link
-              href="/contact"
+              href="/apply"
               className="hidden rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white shadow-sm shadow-orange-600/20 transition hover:bg-orange-600 focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-orange-500 focus-visible:ring-offset-2 sm:inline-flex"
             >
-              Join Marketplace
+              List Your Services
             </Link>
 
             <button
@@ -98,11 +97,11 @@ export default function Header() {
             </nav>
 
             <Link
-              href="/contact"
+              href="/apply"
               onClick={() => setIsMobileMenuOpen(false)}
               className="mt-4 inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-5 py-3 text-sm font-semibold text-white transition hover:bg-orange-600"
             >
-              Join Marketplace
+              List Your Services
             </Link>
           </div>
         ) : null}

@@ -5,7 +5,6 @@ import { useMemo, useState, type ChangeEvent, type FocusEvent, type FormEvent, t
 import Footer from "../components/Footer";
 import Header from "../components/Header";
 import TrustSection from "../components/TrustSection";
-import { supabase } from "../../lib/supabase";
 
 type LeadFormValues = {
   name: string;
@@ -72,6 +71,7 @@ export default function ContactPage() {
   const [errors, setErrors] = useState<LeadFormErrors>({});
   const [touched, setTouched] = useState<Partial<Record<keyof LeadFormValues, boolean>>>({});
   const [submitted, setSubmitted] = useState(false);
+  const [submittedEmail, setSubmittedEmail] = useState("");
   const [loading, setLoading] = useState(false);
   const openChatMatcher = (event: MouseEvent<HTMLAnchorElement>) => {
     event.preventDefault();
@@ -143,33 +143,42 @@ export default function ContactPage() {
       return;
     }
 
-    // Save to Supabase contacts table
+    // Submit to API route (saves to Supabase + sends emails)
     try {
-      const { error: supabaseError } = await supabase
-        .from("contacts")
-        .insert({
+      const notes = [
+        `Timeline: ${values.timeline}`,
+        values.screenshot ? `Screenshot: ${values.screenshot.name}` : null,
+      ]
+        .filter(Boolean)
+        .join("\n");
+
+      const response = await fetch("/api/contact", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
           name: values.name,
           email: values.email,
-          store_url: values.storeUrl || null,
+          store_url: values.storeUrl || "",
           platform: values.platform,
           message: values.help,
           budget: values.budget,
-          status: "new",
-          notes: `Timeline: ${values.timeline}`,
-        });
+          notes,
+        }),
+      });
 
-      if (supabaseError) {
-        console.error("Failed to save contact to Supabase:", supabaseError);
-        alert("Failed to submit form. Please try again.");
-      } else {
-        console.log("Contact saved to Supabase successfully");
-        setSubmitted(true);
-        setValues(initialValues);
-        setErrors({});
-        setTouched({});
+      const payload = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Failed to submit form.");
       }
+
+      setSubmittedEmail(values.email);
+      setSubmitted(true);
+      setValues(initialValues);
+      setErrors({});
+      setTouched({});
     } catch (err) {
-      console.error("Error saving contact:", err);
+      console.error("Error submitting contact form:", err);
       alert("An error occurred. Please try again.");
     } finally {
       setLoading(false);
@@ -189,12 +198,11 @@ export default function ContactPage() {
         <main className="mx-auto w-full max-w-6xl flex-1 px-4 py-16 sm:px-6 sm:py-20">
           <div className="rounded-4xl border border-orange-200 bg-[linear-gradient(135deg,#FFF7ED_0%,#FFFFFF_55%,#FEF3C7_100%)] p-8 text-center shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_20px_60px_-32px_rgba(15,23,42,0.45)] sm:p-12">
             <p className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-              ✅ Your lead is in — we’re matching experts now
+              ✅ Thanks — your brief was sent
             </p>
             <p className="mx-auto mt-4 max-w-2xl text-base leading-7 text-zinc-700">
-              We&apos;ll review your requirements and reach out at{" "}
-              <span className="font-semibold text-orange-700">{values.email}</span>{" "}
-              with relevant Magento and Adobe Commerce experts.
+              We&apos;ll review your request and follow up at{" "}
+              <span className="font-semibold text-orange-700">{submittedEmail}</span>.
             </p>
             <div className="mt-8 flex flex-col items-center justify-center gap-3 sm:flex-row">
               <Link
@@ -225,21 +233,21 @@ export default function ContactPage() {
           <div className="grid gap-10 lg:grid-cols-12 lg:gap-12">
             <div className="lg:col-span-5">
               <p className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold uppercase tracking-[0.22em] text-orange-700 ring-1 ring-orange-200">
-                Hire Magento Experts
+                Magento Hiring
               </p>
               <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-5xl lg:text-6xl">
-                Tell us what you need. We’ll match you with Magento specialists fast.
+                Tell us what you need.
               </h1>
               <p className="mt-5 text-base leading-7 text-zinc-600 sm:text-lg">
-                Share your project details once and get a curated shortlist of Magento and Adobe Commerce experts aligned to your budget, timeline, and technical needs.
+                Share your goals once. We’ll match you with relevant Magento talent.
               </p>
 
               <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-1 xl:grid-cols-2">
                 {[
-                  { title: "Magento-only matching", text: "No generic freelancers or unrelated agency profiles." },
-                  { title: "Qualified shortlists", text: "Developers, architects, Hyvä specialists, and migration experts." },
-                  { title: "Fast response", text: "Most merchants hear back with relevant talent within 2 hours." },
-                  { title: "Simple intake", text: "One clean lead form that captures budget, timeline, and project fit." },
+                  { title: "Magento-focused", text: "No generic freelancer marketplaces." },
+                  { title: "Relevant experts", text: "Developers, architects, Hyvä, and migration specialists." },
+                  { title: "Fast response", text: "Most merchants hear back within 2 hours." },
+                  { title: "Simple brief", text: "One form with the details we need to match accurately." },
                 ].map((item) => (
                   <div
                     key={item.title}
@@ -254,7 +262,7 @@ export default function ContactPage() {
               <div className="mt-8 rounded-3xl border border-orange-200 bg-orange-50 p-6">
                 <p className="text-sm font-semibold text-zinc-900">Need help right now?</p>
                 <p className="mt-2 text-sm leading-6 text-zinc-700">
-                  If you’re still scoping the project, use the AI matcher for a faster intake and we’ll convert it into an expert brief for you.
+                  Not ready to fill the full brief? Start with the AI matcher.
                 </p>
                 <div className="mt-4 flex flex-col gap-3 sm:flex-row lg:flex-col xl:flex-row">
                   <Link
@@ -278,10 +286,10 @@ export default function ContactPage() {
               <div className="flex flex-col gap-3 border-b border-zinc-200 pb-6 sm:flex-row sm:items-end sm:justify-between">
                 <div>
                   <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-                    Hire Magento Experts
+                    Project Brief
                   </h2>
                   <p className="mt-2 text-sm leading-6 text-zinc-600 sm:text-base">
-                    Share your project details and we'll match you with the right Magento expert for your needs.
+                    Share key details so we can match the right expert.
                   </p>
                 </div>
                 <div className="rounded-2xl bg-zinc-50 px-4 py-3 text-sm text-zinc-700 ring-1 ring-zinc-200">
@@ -402,12 +410,12 @@ export default function ContactPage() {
                     onChange={handleFieldChange}
                     onBlur={handleFieldBlur}
                     className={fieldClassName("help")}
-                    placeholder="Example: Magento 2 checkout bug fixes, Hyvä implementation, performance optimization, migration, team augmentation, or a full Adobe Commerce rebuild."
+                    placeholder="Briefly describe your goal, blockers, and urgency."
                     aria-invalid={Boolean(visibleErrors.help)}
                     aria-describedby={visibleErrors.help ? "help-error" : "help-hint"}
                   />
                   <div className="mt-2 flex items-center justify-between gap-3 text-xs text-zinc-500">
-                    <p id="help-hint">Share scope, urgency, and anything important for matching.</p>
+                    <p id="help-hint">Include scope, urgency, and success criteria.</p>
                     <span>{values.help.trim().length} characters</span>
                   </div>
                   {visibleErrors.help ? (
@@ -499,14 +507,14 @@ export default function ContactPage() {
 
                 <div className="flex flex-col gap-4 border-t border-zinc-200 pt-6 sm:flex-row sm:items-center sm:justify-between">
                   <p className="text-sm leading-6 text-zinc-500">
-                    By submitting this form, you’re asking MageMatch to route your request to relevant Magento experts.
+                    We use this brief to shortlist relevant Magento experts.
                   </p>
                   <button
                     type="submit"
                     disabled={loading}
                     className="inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-6 py-3.5 text-sm font-semibold text-white transition cursor-pointer hover:bg-orange-600 hover:cursor-pointer disabled:cursor-not-allowed disabled:opacity-70 sm:w-auto"
                   >
-                    {loading ? "Sending..." : "Get Matched with Experts"}
+                    {loading ? "Sending..." : "Submit Brief"}
                   </button>
                 </div>
               </form>

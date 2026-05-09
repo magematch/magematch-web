@@ -1,34 +1,27 @@
 import type { Metadata } from "next";
 
 export const metadata: Metadata = {
-  title: "Hire Magento Experts | MageMatch Lead Form",
+  title: "Contact Magento Experts",
   description:
-    "Submit your Magento or Adobe Commerce lead and get matched with relevant developers, architects, and specialists within 2 hours.",
-  keywords: [
-    "contact magematch",
-    "hire magento developer",
-    "adobe commerce support",
-    "magento project brief",
-    "hire magento experts",
-  ],
+    "Share your Magento or Adobe Commerce project brief and get matched with a vetted developer in hours.",
   alternates: {
-    canonical: "/contact",
+    canonical: "https://magematch.com/contact",
   },
   openGraph: {
-    title: "Hire Magento Experts | MageMatch Lead Form",
+    title: "Contact Magento Experts | MageMatch",
     description:
-      "Submit your Magento project requirements and get matched with verified experts within 2 hours.",
-    url: "/contact",
-    siteName: "MageMatch",
+      "Tell us your Magento project requirements and get fast expert matches with fixed-price options.",
+    url: "https://magematch.com/contact",
     type: "website",
-    images: ["/favicon.svg"],
+    siteName: "MageMatch",
+    images: ["/opengraph-image"],
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hire Magento Experts | MageMatch Lead Form",
+    title: "Contact Magento Experts | MageMatch",
     description:
-      "Submit your Magento project requirements and get matched with verified experts within 2 hours.",
-    images: ["/favicon.svg"],
+      "Tell us your Magento project requirements and get matched quickly.",
+    images: ["/opengraph-image"],
   },
 };
 

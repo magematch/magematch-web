@@ -41,11 +41,11 @@ export default function HowItWorksPage() {
 
       <main className="flex-1">
         <section className="bg-linear-to-b from-zinc-50 to-white">
-          <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-12">
             <p className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200">
               How it works
             </p>
-            <h1 className="mt-6 text-5xl font-semibold tracking-tight text-zinc-900 sm:text-6xl">
+            <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
               A Magento hiring flow designed for outcomes
             </h1>
             <p className="mt-5 max-w-3xl text-base leading-7 text-zinc-600 sm:text-lg sm:leading-8">
@@ -227,43 +227,29 @@ export default function HowItWorksPage() {
               <aside className="lg:col-span-5">
                 <div className="rounded-3xl border border-orange-200/80 bg-linear-to-br from-orange-50 via-white to-white p-7 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_18px_48px_-28px_rgba(15,23,42,0.55)] sm:p-10">
                   <h2 className="text-lg font-semibold text-zinc-900">
-                    Pricing / commission model
+                    Pricing details
                   </h2>
                   <p className="mt-3 text-sm leading-6 text-zinc-700">
-                    MageMatch is designed to be straightforward:
+                    Pricing now has its own page, including merchant costs, developer commission, and example packages.
                   </p>
-                  <ul className="mt-5 space-y-3 text-sm text-zinc-700">
-                    {[
-                      "Merchants see clear package pricing or hourly rates upfront.",
-                      "Developers set their own rates and productized services.",
-                      "MageMatch earns a marketplace commission on completed work.",
-                      "No hidden fees; the goal is alignment and high-quality delivery.",
-                    ].map((i) => (
-                      <li key={i} className="flex gap-3">
-                        <span className="mt-2 h-2 w-2 shrink-0 rounded-full bg-orange-500" />
-                        <span>{i}</span>
-                      </li>
-                    ))}
-                  </ul>
 
                   <div className="mt-6 flex flex-col gap-3 sm:flex-row">
                     <Link
-                      href="/developers"
+                      href="/pricing"
                       className="inline-flex h-11 items-center justify-center rounded-full bg-orange-500 px-5 text-sm font-semibold text-white shadow-sm shadow-orange-600/20 transition hover:bg-orange-600"
                     >
-                      Explore developers
+                      View pricing
                     </Link>
                     <Link
-                      href="/"
+                      href="/apply"
                       className="inline-flex h-11 items-center justify-center rounded-full bg-white px-5 text-sm font-semibold text-zinc-800 ring-1 ring-zinc-200 shadow-sm shadow-zinc-900/5 transition hover:bg-zinc-50"
                     >
-                      Join early access
+                      Apply as developer
                     </Link>
                   </div>
 
                   <p className="mt-4 text-xs text-zinc-500">
-                    Commission details will be published as the marketplace
-                    opens. This is a static preview page.
+                    See the dedicated pricing page for the latest launch-period terms.
                   </p>
                 </div>
               </aside>

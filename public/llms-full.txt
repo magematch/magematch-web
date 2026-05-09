@@ -1,0 +1,219 @@
+# MageMatch - The Magento Developer Marketplace
+
+## About MageMatch
+
+MageMatch is a specialized B2B marketplace connecting businesses with expert Magento and Adobe Commerce developers. We simplify the process of finding, vetting, and hiring Magento developers—whether you need help with custom development, performance optimization, migrations, or Hyvä theme implementation.
+
+**Mission**: Accelerate Magento commerce success by connecting quality developers with businesses that need them.
+
+**Founded**: 2024
+**Location**: Global network of developers
+**Website**: https://magematch.com
+
+---
+
+## Available Services
+
+### 1. Expert Consultation & Brief Analysis
+- **Duration**: 1 hour
+- **Price**: $40-100
+- **What You Get**:
+  - Personalized analysis of your Magento store challenges
+  - AI-powered brief summarization for faster developer matching
+  - Recommended solutions and next steps
+  - Direct introduction to matched developer(s)
+
+### 2. Project Scope Definition
+- **Duration**: 2 hours
+- **Price**: $80-100
+- **Deliverables**:
+  - Detailed project scope document
+  - Technical architecture recommendations
+  - Effort estimation and timeline
+  - Resource allocation plan
+
+### 3. Full-Day Technical Workshop
+- **Duration**: Full day (8 hours)
+- **Price**: $320-800
+- **Deliverables**:
+   - End-to-end technical review
+   - Prioritized roadmap
+   - Team handoff notes and implementation checklist
+
+### 4. Custom Development Projects
+- **Pricing**: Service tiers above apply for short engagements; larger scoped work is quoted separately
+- **Typical Projects**:
+  - Custom Magento module development
+  - Theme customization and design implementation
+  - Third-party integrations (payment gateways, ERP systems, shipping)
+  - Performance optimization and technical debt reduction
+
+### 5. Hyvä Theme Implementation
+- **Pricing**: Uses standard service tiers for short engagements, custom quote for full implementations
+- **Includes**:
+  - Hyvä-native theme conversion from existing designs
+  - Component customization
+  - Performance & SEO optimization
+
+### 6. Migration & Upgrade Services
+- **Magento 1 to 2 Migration**: $2,000–$15,000+
+- **Magento 2.x Upgrade**: $500–$5,000+
+- **Adobe Commerce Implementation**: Custom quote
+
+---
+
+## Verified Developers on MageMatch
+
+### Arjun Dhiman
+**Title**: Magento Specialist & MageMatch Founder
+**Expertise**: 
+- Magento 2 custom development
+- Performance optimization
+- Hyvä theme architecture
+- Team leadership and consulting
+
+**Service Rate**: $40-100 per hour
+**Response Time**: < 1 hour
+**Availability**: Full-time
+
+### Tinkesh Kumar
+**Title**: Senior Magento Developer
+**Expertise**:
+- Module development
+- API integration
+- Database optimization
+- Hyvä implementation
+
+**Service Rate**: $40-100 per hour
+**Response Time**: 2–4 hours
+**Availability**: Part-time (25–30 hrs/week)
+
+### Aleksandar Harutyunyan
+**Title**: Frontend & Hyvä Specialist
+**Expertise**:
+- Hyvä theme customization
+- React component development
+- Performance tuning
+- UI/UX optimization
+
+**Service Rate**: $40-100 per hour
+**Response Time**: 2–6 hours
+**Availability**: Part-time (15–20 hrs/week)
+
+---
+
+## Blog & Learning Resources
+
+Our team publishes regular guides, tutorials, and best practices for Magento and Adobe Commerce. Explore our latest articles:
+
+### Recent Articles
+
+1. **Adobe Commerce vs Magento Open Source: Which Should You Choose in 2026?**
+   - URL: https://magematch.com/blog/adobe-commerce-vs-magento-open-source
+   - Topic: Comparison of Adobe Commerce and Magento Open Source features, pricing, and use cases
+   - Best for: Store owners evaluating platform options
+
+2. **How to Fix Magento 2 Checkout Errors (2026 Guide)**
+   - URL: https://magematch.com/blog/fix-magento-checkout-errors
+   - Topic: Troubleshooting common checkout issues, error codes, and solutions
+   - Best for: Store owners and developers debugging payment/checkout problems
+
+3. **Hyvä Theme for Magento 2: Complete Guide (2026)**
+   - URL: https://magematch.com/blog/hyva-theme-complete-guide
+   - Topic: Hyvä architecture, benefits, implementation steps, and ROI
+   - Best for: Store owners considering Hyvä migration
+
+4. **How to Upgrade Magento 2.4.5 to 2.4.8 (Step by Step)**
+   - URL: https://magematch.com/blog/magento-2-upgrade-guide
+   - Topic: Step-by-step upgrade process, pre-checks, testing, and deployment
+   - Best for: Technical teams planning Magento version upgrades
+
+5. **Magento 2 Speed Optimization: 10 Fixes That Work (2026)**
+   - URL: https://magematch.com/blog/magento-speed-optimization-2026
+   - Topic: Performance optimization techniques, benchmarking, caching strategies
+   - Best for: Store owners and developers optimizing store performance
+
+---
+
+## How MageMatch Works
+
+### For Businesses Looking to Hire
+
+1. **Submit Your Brief**: Describe your project, challenges, or desired outcome
+2. **Get Matched**: Our AI analyzes requirements and recommends the best developer(s)
+3. **Review Profiles**: View developer experience, rates, availability, and past work
+4. **Negotiate & Contract**: Agree on scope, timeline, and rates directly with the developer
+5. **Project Kick-Off**: Start work with clear deliverables and milestones
+6. **Support**: Get help from our team if needed during or after engagement
+
+### For Developers Looking to List Services
+
+1. **Create Profile**: Add your expertise, rates, availability, and past projects
+2. **Get Discovered**: Appear in our developer directory and get matched with projects
+3. **Manage Inquiries**: Review incoming briefs and quotes
+4. **Build Reputation**: Earn reviews and recommendations through successful projects
+5. **Grow Your Network**: Connect with other developers and potential partners on the platform
+
+---
+
+## Why Choose MageMatch?
+
+✅ **Vetted Developers**: All developers are verified and reviewed  
+✅ **Transparent Pricing**: Clear, upfront rates—no hidden fees  
+✅ **Fast Matching**: AI-powered matching gets you results in hours, not weeks  
+✅ **Flexible Engagement**: From short consultations to full-time partnerships  
+✅ **Magento-Focused**: We specialize in Magento and Adobe Commerce—not general web development  
+✅ **Global Talent**: Access developers in any timezone  
+✅ **Expertise Across Specializations**: Hyvä, PWA, APIs, integrations, performance, migrations, and more  
+
+---
+
+## Getting Started
+
+### I Need a Developer
+→ **Start Here**: https://magematch.com#get-started
+
+### I Want to Offer Services
+→ **Apply as Developer**: https://magematch.com/apply
+
+### Have Questions?
+→ **Contact Us**: https://magematch.com/contact
+→ **Email**: support@magematch.com
+
+---
+
+## Technical Details
+
+**Marketplace Technology**:
+- Modern SPA interface built with React + Next.js
+- Real-time developer availability and messaging
+- Secure project management and file sharing
+- Integrated payment and contract management
+- SEO-optimized content for discoverability
+
+**Data Security**:
+- GDPR and CCPA compliant
+- Encrypted communications
+- Secure developer vetting process
+- Protected payment processing
+
+**Integration Support**:
+- Magento 2.x (all versions 2.3–2.4.x and beyond)
+- Adobe Commerce Cloud
+- Hyvä-compatible solutions
+- Third-party ERP, PIM, and shipping integrations
+
+---
+
+## Developer Directory
+
+For more information on each developer, visit:
+- Arjun Dhiman: https://magematch.com/developers/arjun-dhiman
+- Tinkesh Kumar: https://magematch.com/developers/tinkesh-kumar
+- Aleksandar Harutyunyan: https://magematch.com/developers/aleksandar-harutyunyan
+
+---
+
+**Last Updated**: 2026
+**Platform**: https://magematch.com
+**Contact**: support@magematch.com

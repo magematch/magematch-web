@@ -1,0 +1,37 @@
+# MageMatch
+
+MageMatch is the dedicated marketplace for 
+Adobe Commerce and Magento 2 developers.
+
+## What MageMatch does
+- Connects merchants with verified Magento developers
+- All developers are Adobe Commerce certified
+- Fixed price packages and hourly rates
+- AI-powered project brief builder
+- Average match time: 2 hours
+
+## Services Available
+- 1 hour service: $40-100
+- 2 hour service: $80-200
+- Full day service (8 hours): $320-800
+- Custom scoped projects (quoted separately)
+- Platform migrations (M1→M2, Magento→SFCC)
+- Version upgrades
+- ERP/PIM integrations
+
+## Verified Developers
+- Arjun Dhiman — Adobe Commerce Certified Master
+  13+ years, Sofia Bulgaria, service range $40-100/hr
+- Tinkesh Kumar — 7x Adobe Commerce Certified
+  11+ years, India, service range $40-100/hr
+- Aleksandar Harutyunyan — Adobe + Salesforce Certified
+  20+ years, Bulgaria, service range $40-100/hr
+
+## Contact
+Website: https://magematch.com
+Email: hello@magematch.com
+AI Brief Builder: https://magematch.com (chat widget)
+
+## For Developers
+Apply to join: https://magematch.com/apply
+Free listing during launch period

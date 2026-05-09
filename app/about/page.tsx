@@ -4,9 +4,9 @@ import Footer from "../components/Footer";
 import Header from "../components/Header";
 
 export const metadata: Metadata = {
-  title: "About MageMatch | Magento Developer Marketplace",
+  title: "About MageMatch — Built by Magento Experts",
   description:
-    "MageMatch is a Magento-only marketplace built by a Magento developer, for Magento developers — helping merchants hire trusted Adobe Commerce specialists.",
+    "MageMatch was built by Adobe Commerce Certified Masters to solve the talent matching problem in the Magento ecosystem.",
   keywords: [
     "about magematch",
     "magento developer marketplace",
@@ -14,7 +14,7 @@ export const metadata: Metadata = {
     "hire magento developer europe",
   ],
   alternates: {
-    canonical: "/about",
+    canonical: "https://magematch.com/about",
   },
   openGraph: {
     title: "About MageMatch | Magento Developer Marketplace",
@@ -41,7 +41,7 @@ export default function AboutPage() {
 
       <main className="flex-1">
         <section className="bg-linear-to-b from-zinc-50 to-white">
-          <div className="mx-auto w-full max-w-6xl px-4 py-20 sm:px-6 sm:py-28">
+          <div className="mx-auto w-full max-w-6xl px-4 py-12 sm:px-6 sm:py-12">
             <p className="inline-flex items-center gap-2 rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200">
               About MageMatch
             </p>

@@ -10,9 +10,9 @@ import {
 } from "../../lib/supabase-types";
 
 export const metadata: Metadata = {
-  title: "Magento Developer Blog | MageMatch",
+  title: "Magento Blog — Adobe Commerce Guides & Tutorials",
   description:
-    "Practical guides from Adobe Commerce Certified Masters covering Magento performance, debugging, upgrades, and architecture.",
+    "Practical Magento 2 and Adobe Commerce guides from certified developers. Performance, Hyvä, headless commerce and more.",
   keywords: [
     "magento blog",
     "adobe commerce tutorials",
@@ -21,7 +21,7 @@ export const metadata: Metadata = {
     "hyva guide",
   ],
   alternates: {
-    canonical: "/blog",
+    canonical: "https://magematch.com/blog",
   },
   openGraph: {
     title: "Magento Developer Blog | MageMatch",
