@@ -206,6 +206,38 @@ export async function sendBriefNotification(data: BriefNotificationPayload) {
   });
 }
 
+export async function sendEmailVerificationCode(data: { email: string; code: string }) {
+  const resend = getResendClient();
+
+  const { error } = await resend.emails.send({
+    from: FROM_EMAIL,
+    to: data.email,
+    subject: `${data.code} is your MageMatch verification code`,
+    html: `
+      <div style="font-family:sans-serif;max-width:480px;margin:0 auto;padding:32px 24px;background:#ffffff">
+        <h2 style="font-size:22px;font-weight:700;color:#18181b;margin-bottom:8px">Verify your email</h2>
+        <p style="color:#52525b;font-size:15px;line-height:1.6;margin-bottom:24px">
+          Use the code below to complete your MageMatch developer application.
+          It expires in <strong>10 minutes</strong>.
+        </p>
+        <div style="text-align:center;background:#fff7ed;border:2px solid #fed7aa;border-radius:16px;padding:28px 24px;margin-bottom:24px">
+          <p style="font-size:42px;font-weight:800;letter-spacing:12px;color:#ea580c;margin:0">${escapeHtml(data.code)}</p>
+        </div>
+        <p style="color:#71717a;font-size:13px;line-height:1.5">
+          If you didn't apply to MageMatch, you can safely ignore this email.
+        </p>
+        <p style="margin-top:24px;font-size:13px;color:#a1a1aa">
+          The MageMatch Team &mdash; <a href="https://magematch.com" style="color:#ea580c">magematch.com</a>
+        </p>
+      </div>
+    `,
+  });
+
+  if (error) {
+    throw new Error(`Resend error: ${error.message}`);
+  }
+}
+
 export async function sendDeveloperApplicationEmails(data: {
   fullName: string;
   email: string;

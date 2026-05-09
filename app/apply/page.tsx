@@ -146,6 +146,13 @@ export default function ApplyPage() {
   const [submitted, setSubmitted] = useState(false);
   const [submitError, setSubmitError] = useState("");
 
+  // Verification step state
+  const [verifying, setVerifying] = useState(false);
+  const [codeValue, setCodeValue] = useState("");
+  const [codeError, setCodeError] = useState("");
+  const [verifyLoading, setVerifyLoading] = useState(false);
+  const [resendCooldown, setResendCooldown] = useState(0);
+
   const visibleErrors = useMemo(() => {
     const nextErrors: ApplyFormErrors = {};
 
@@ -203,6 +210,26 @@ export default function ApplyPage() {
     setErrors(validate(nextValues));
   };
 
+  const startResendCooldown = () => {
+    setResendCooldown(60);
+    const interval = setInterval(() => {
+      setResendCooldown((prev) => {
+        if (prev <= 1) { clearInterval(interval); return 0; }
+        return prev - 1;
+      });
+    }, 1000);
+  };
+
+  const sendVerificationCode = async (email: string) => {
+    const response = await fetch("/api/verify-email", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({ email }),
+    });
+    const payload = (await response.json()) as { error?: string };
+    if (!response.ok) throw new Error(payload.error || "Failed to send code.");
+  };
+
   const handleSubmit = async (event: FormEvent<HTMLFormElement>) => {
     event.preventDefault();
     setLoading(true);
@@ -233,23 +260,10 @@ export default function ApplyPage() {
     }
 
     try {
-      const response = await fetch("/api/apply", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify(values),
-      });
-
-      const payload = (await response.json()) as { error?: string };
-
-      if (!response.ok) {
-        throw new Error(payload.error || "Failed to submit application.");
-      }
-
+      await sendVerificationCode(values.email);
       setSubmittedEmail(values.email);
-      setSubmitted(true);
-      setValues(initialValues);
-      setErrors({});
-      setTouched({});
+      setVerifying(true);
+      startResendCooldown();
     } catch (error) {
       setSubmitError(
         error instanceof Error ? error.message : "Something went wrong. Please try again.",
@@ -258,6 +272,128 @@ export default function ApplyPage() {
       setLoading(false);
     }
   };
+
+  const handleVerify = async () => {
+    setCodeError("");
+
+    if (!/^\d{6}$/.test(codeValue.trim())) {
+      setCodeError("Please enter the 6-digit code from your email.");
+      return;
+    }
+
+    setVerifyLoading(true);
+
+    try {
+      const response = await fetch("/api/apply", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ ...values, verificationCode: codeValue.trim() }),
+      });
+
+      const payload = (await response.json()) as { error?: string };
+
+      if (!response.ok) {
+        throw new Error(payload.error || "Failed to submit application.");
+      }
+
+      setSubmitted(true);
+      setValues(initialValues);
+      setErrors({});
+      setTouched({});
+    } catch (error) {
+      setCodeError(
+        error instanceof Error ? error.message : "Something went wrong. Please try again.",
+      );
+    } finally {
+      setVerifyLoading(false);
+    }
+  };
+
+  const handleResend = async () => {
+    if (resendCooldown > 0) return;
+    setCodeError("");
+    try {
+      await sendVerificationCode(submittedEmail);
+      startResendCooldown();
+    } catch (error) {
+      setCodeError(error instanceof Error ? error.message : "Could not resend code.");
+    }
+  };
+
+  if (verifying && !submitted) {
+    return (
+      <div className="flex min-h-full flex-1 flex-col">
+        <Header />
+        <main className="mx-auto w-full max-w-md flex-1 px-4 py-16 sm:px-6 sm:py-20">
+          <div className="rounded-4xl border border-zinc-200/80 bg-white p-8 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_24px_64px_-32px_rgba(15,23,42,0.45)] sm:p-10">
+            <div className="mb-6 flex h-12 w-12 items-center justify-center rounded-full bg-orange-50 ring-1 ring-orange-200">
+              <span className="text-xl">📧</span>
+            </div>
+            <h2 className="text-2xl font-semibold tracking-tight text-zinc-900">
+              Verify your email
+            </h2>
+            <p className="mt-2 text-sm leading-6 text-zinc-600">
+              We sent a 6-digit code to{" "}
+              <span className="font-semibold text-zinc-900">{submittedEmail}</span>.
+              Enter it below to complete your application.
+            </p>
+
+            <div className="mt-6">
+              <label htmlFor="codeInput" className="text-sm font-semibold text-zinc-900">
+                Verification code
+              </label>
+              <input
+                id="codeInput"
+                type="text"
+                inputMode="numeric"
+                maxLength={6}
+                value={codeValue}
+                onChange={(e) => setCodeValue(e.target.value.replace(/\D/g, "").slice(0, 6))}
+                onKeyDown={(e) => { if (e.key === "Enter") void handleVerify(); }}
+                placeholder="123456"
+                className={`mt-2 w-full rounded-2xl border px-4 py-3.5 text-center text-2xl font-bold tracking-[0.4em] text-zinc-900 outline-none ring-orange-500 transition placeholder:text-zinc-300 placeholder:tracking-normal focus:ring-2 ${
+                  codeError ? "border-red-300 bg-red-50/40" : "border-zinc-300 bg-white"
+                }`}
+              />
+              {codeError ? (
+                <p className="mt-2 text-sm text-red-600">{codeError}</p>
+              ) : null}
+            </div>
+
+            <button
+              type="button"
+              onClick={() => void handleVerify()}
+              disabled={verifyLoading || codeValue.length !== 6}
+              className="mt-5 inline-flex w-full items-center justify-center rounded-full bg-orange-500 px-6 py-3.5 text-sm font-semibold text-white transition hover:bg-orange-600 disabled:cursor-not-allowed disabled:opacity-70"
+            >
+              {verifyLoading ? "Verifying…" : "Confirm & Submit Application →"}
+            </button>
+
+            <div className="mt-4 text-center text-sm text-zinc-500">
+              Didn&apos;t receive the code?{" "}
+              <button
+                type="button"
+                onClick={() => void handleResend()}
+                disabled={resendCooldown > 0}
+                className="font-medium text-orange-600 hover:text-orange-700 disabled:cursor-not-allowed disabled:opacity-50"
+              >
+                {resendCooldown > 0 ? `Resend in ${resendCooldown}s` : "Resend code"}
+              </button>
+            </div>
+
+            <button
+              type="button"
+              onClick={() => { setVerifying(false); setCodeValue(""); setCodeError(""); }}
+              className="mt-3 w-full text-center text-sm text-zinc-400 hover:text-zinc-600"
+            >
+              ← Back to form
+            </button>
+          </div>
+        </main>
+        <Footer />
+      </div>
+    );
+  }
 
   if (submitted) {
     return (

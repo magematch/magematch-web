@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { BlogPostJsonLd } from "../../components/JsonLd";
+import { BlogPostJsonLd, BreadcrumbListJsonLd } from "../../components/JsonLd";
 import { supabase } from "../../../lib/supabase";
 import {
   normalizeBlogPost,
@@ -50,13 +50,13 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         url: `https://magematch.com/blog/${typedPost.slug}`,
         siteName: "MageMatch",
         type: "article",
-        images: ["/opengraph-image"],
+        images: [`https://magematch.com/blog/${typedPost.slug}/opengraph-image`],
       },
       twitter: {
         card: "summary_large_image",
         title: typedPost.title,
         description: typedPost.description,
-        images: ["/opengraph-image"],
+        images: [`https://magematch.com/blog/${typedPost.slug}/opengraph-image`],
       },
     };
   } catch (err) {
@@ -94,6 +94,13 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             updated_at: typedPost.updated_at,
             slug: typedPost.slug,
           }}
+        />
+        <BreadcrumbListJsonLd
+          items={[
+            { name: "Home", href: "/" },
+            { name: "Blog", href: "/blog" },
+            { name: typedPost.title, href: `/blog/${typedPost.slug}` },
+          ]}
         />
         <ReadingProgress />
         <Header />

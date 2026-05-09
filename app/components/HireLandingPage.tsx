@@ -1,4 +1,5 @@
 import Link from "next/link";
+import { BreadcrumbListJsonLd } from "./JsonLd";
 import Footer from "./Footer";
 import Header from "./Header";
 import TrustSection from "./TrustSection";
@@ -83,6 +84,13 @@ export default function HireLandingPage({
   return (
     <>
       <FaqSchema faqs={faqs} />
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Hire", href: "/developers" },
+          { name: badge, href: config.canonical },
+        ]}
+      />
 
       <div className="flex min-h-full flex-1 flex-col">
         <Header />

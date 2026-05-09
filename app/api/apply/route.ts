@@ -21,6 +21,7 @@ type RequestBody = {
   topProjects: string;
   whyMagematch: string;
   portfolioUrl?: string;
+  verificationCode: string;
 };
 
 function isValidEmail(email: string) {
@@ -87,11 +88,41 @@ export async function POST(request: Request) {
     return NextResponse.json({ error: 'One or more text fields exceed the limit.' }, { status: 400 });
   }
 
+  const verificationCode = body.verificationCode?.trim();
+
+  if (!verificationCode || !/^\d{6}$/.test(verificationCode)) {
+    return NextResponse.json({ error: 'A valid 6-digit verification code is required.' }, { status: 400 });
+  }
+
   const yearsExperience = Number(body.yearsExperience);
   const hourlyRate = Number(body.hourlyRate);
 
   if (Number.isNaN(yearsExperience) || Number.isNaN(hourlyRate)) {
     return NextResponse.json({ error: 'Experience and hourly rate must be numeric.' }, { status: 400 });
+  }
+
+  // Verify email OTP
+  const now = new Date().toISOString();
+  const { data: verificationRow, error: verifyFetchError } = await supabaseAdmin
+    .from('email_verifications')
+    .select('code, expires_at, used')
+    .eq('email', body.email.trim().toLowerCase())
+    .single();
+
+  if (verifyFetchError || !verificationRow) {
+    return NextResponse.json({ error: 'No verification code found. Please request a new one.' }, { status: 400 });
+  }
+
+  if (verificationRow.used) {
+    return NextResponse.json({ error: 'This verification code has already been used.' }, { status: 400 });
+  }
+
+  if (verificationRow.expires_at < now) {
+    return NextResponse.json({ error: 'Verification code has expired. Please request a new one.' }, { status: 400 });
+  }
+
+  if (verificationRow.code !== verificationCode) {
+    return NextResponse.json({ error: 'Incorrect verification code. Please check your email.' }, { status: 400 });
   }
 
   try {
@@ -116,6 +147,12 @@ export async function POST(request: Request) {
       console.error('Failed to save developer application:', error);
       return NextResponse.json({ error: 'Failed to save application.' }, { status: 500 });
     }
+
+    // Mark the verification code as consumed
+    await supabaseAdmin
+      .from('email_verifications')
+      .update({ used: true })
+      .eq('email', body.email.trim().toLowerCase());
 
     await sendApplicationNotification({
       full_name: body.fullName,

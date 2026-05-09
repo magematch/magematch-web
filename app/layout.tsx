@@ -48,6 +48,12 @@ export const metadata: Metadata = {
   publisher: "MageMatch",
   alternates: {
     canonical: "https://magematch.com",
+    types: {
+      "text/plain": [
+        { url: "https://magematch.com/llms.txt", title: "MageMatch LLM Summary" },
+        { url: "https://magematch.com/llms-full.txt", title: "MageMatch LLM Full Detail" },
+      ],
+    },
   },
   openGraph: {
     type: "website",
@@ -91,9 +97,14 @@ export const metadata: Metadata = {
     apple: "/apple-touch-icon.png",
   },
   manifest: "/manifest.json",
-  verification: {
-    google: "REPLACE_WITH_GOOGLE_VERIFICATION_CODE",
-  },
+  ...((process.env.GOOGLE_SITE_VERIFICATION || process.env.BING_SITE_VERIFICATION)
+    ? {
+        verification: {
+          ...(process.env.GOOGLE_SITE_VERIFICATION ? { google: process.env.GOOGLE_SITE_VERIFICATION } : {}),
+          ...(process.env.BING_SITE_VERIFICATION ? { other: { "msvalidate.01": process.env.BING_SITE_VERIFICATION } } : {}),
+        },
+      }
+    : {}),
 };
 
 export default function RootLayout({

@@ -3,7 +3,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
-import { PersonJsonLd } from "../../components/JsonLd";
+import { PersonJsonLd, BreadcrumbListJsonLd } from "../../components/JsonLd";
 import { supabase } from "../../../lib/supabase";
 import type { Developer } from "../../../lib/supabase-types";
 
@@ -49,13 +49,13 @@ export async function generateMetadata(
       url: `https://magematch.com/developers/${developer.slug}`,
       siteName: "MageMatch",
       type: "profile",
-      images: ["/opengraph-image"],
+      images: [`https://magematch.com/developers/${developer.slug}/opengraph-image`],
     },
     twitter: {
       card: "summary_large_image",
       title: `${developer.name} | MageMatch`,
       description: developer.headline,
-      images: ["/opengraph-image"],
+      images: [`https://magematch.com/developers/${developer.slug}/opengraph-image`],
     },
   };
 }
@@ -100,6 +100,13 @@ export default async function DeveloperProfilePage(
           slug: developer.slug,
           skills: developer.skills,
         }}
+      />
+      <BreadcrumbListJsonLd
+        items={[
+          { name: "Home", href: "/" },
+          { name: "Developers", href: "/developers" },
+          { name: developer.name, href: `/developers/${developer.slug}` },
+        ]}
       />
       <Header />
 

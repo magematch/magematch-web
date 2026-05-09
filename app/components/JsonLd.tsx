@@ -85,6 +85,26 @@ export function PersonJsonLd({ developer }: { developer: PersonJsonLdDeveloper }
   return <JsonLdScript data={data} />;
 }
 
+export type BreadcrumbItem = {
+  name: string;
+  href: string;
+};
+
+export function BreadcrumbListJsonLd({ items }: { items: BreadcrumbItem[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: items.map((item, index) => ({
+      "@type": "ListItem",
+      position: index + 1,
+      name: item.name,
+      item: item.href.startsWith("http") ? item.href : `https://magematch.com${item.href}`,
+    })),
+  };
+
+  return <JsonLdScript data={data} />;
+}
+
 export function BlogPostJsonLd({ post }: { post: BlogJsonLdPost }) {
   const description = post.excerpt || post.description || "Magento guide";
 
