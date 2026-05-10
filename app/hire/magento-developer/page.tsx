@@ -13,22 +13,26 @@ export const metadata: Metadata = {
     "magento php developer",
     "adobe commerce developer for hire",
   ],
-  alternates: { canonical: "/hire/magento-developer" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Magento Development",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/magento-developer" },
   openGraph: {
     title: "Hire Magento Developer | MageMatch",
     description:
       "Find certified Magento 2 developers matched to your project within 2 hours. Magento-only marketplace.",
-    url: "/hire/magento-developer",
+    url: "https://magematch.com/hire/magento-developer",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Magento Developer | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Magento Developer | MageMatch",
     description:
       "Find certified Magento 2 developers matched to your project within 2 hours. Magento-only marketplace.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

@@ -1,9 +1,11 @@
 import type { MetadataRoute } from 'next';
+import { seedPostSlugs } from '../lib/seedPostSlugs';
 import { supabase, supabaseAdmin } from '../lib/supabase';
 
 type SitemapPost = {
   slug: string;
   updated_at: string | null;
+  created_at: string | null;
 };
 
 type SitemapDeveloper = {
@@ -17,7 +19,7 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
 
   const { data: posts } = await client
     .from('posts')
-    .select('slug, updated_at')
+    .select('slug, updated_at, created_at')
     .eq('published', true);
 
   const { data: developers } = await client
@@ -130,9 +132,27 @@ export default async function sitemap(): Promise<MetadataRoute.Sitemap> {
     },
   ];
 
-  const blogPages: MetadataRoute.Sitemap = ((posts as SitemapPost[] | null) || []).map((post) => ({
+  const postMap = new Map<string, SitemapPost>();
+
+  (((posts as SitemapPost[] | null) || [])).forEach((post) => {
+    if (post?.slug) {
+      postMap.set(post.slug, post);
+    }
+  });
+
+  seedPostSlugs.forEach((slug) => {
+    if (!postMap.has(slug)) {
+      postMap.set(slug, {
+        slug,
+        updated_at: null,
+        created_at: null,
+      });
+    }
+  });
+
+  const blogPages: MetadataRoute.Sitemap = Array.from(postMap.values()).map((post) => ({
     url: `${baseUrl}/blog/${post.slug}`,
-    lastModified: post.updated_at ? new Date(post.updated_at) : new Date(),
+    lastModified: post.updated_at || post.created_at ? new Date(post.updated_at || post.created_at || new Date()) : new Date(),
     changeFrequency: 'monthly',
     priority: 0.8,
   }));

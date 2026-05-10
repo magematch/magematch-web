@@ -11,23 +11,28 @@ export const metadata: Metadata = {
     "adobe commerce developer germany",
     "magento entwickler einstellen",
     "hire magento developer berlin",
+    "magento freelancer deutschland",
   ],
-  alternates: { canonical: "/hire/magento-developer-germany" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Magento Hiring Germany",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/magento-developer-germany" },
   openGraph: {
     title: "Hire Magento Developers in Germany | MageMatch",
     description:
       "Find vetted Magento and Adobe Commerce developers in Germany for performance, integrations, and migration delivery.",
-    url: "/hire/magento-developer-germany",
+    url: "https://magematch.com/hire/magento-developer-germany",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Magento Developers in Germany | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Magento Developers in Germany | MageMatch",
     description:
       "Find vetted Magento and Adobe Commerce developers in Germany for performance, integrations, and migration delivery.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

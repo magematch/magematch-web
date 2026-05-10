@@ -12,9 +12,11 @@ type BlogJsonLdPost = {
   excerpt?: string;
   description?: string;
   author: string;
+  authorUrl?: string;
   created_at?: string;
   updated_at?: string;
   slug: string;
+  tags?: string[];
 };
 
 function JsonLdScript({ data }: { data: Record<string, unknown> }) {
@@ -105,6 +107,32 @@ export function BreadcrumbListJsonLd({ items }: { items: BreadcrumbItem[] }) {
   return <JsonLdScript data={data} />;
 }
 
+type BlogListItem = {
+  title: string;
+  slug: string;
+  description?: string;
+  created_at?: string;
+};
+
+export function BlogListJsonLd({ items }: { items: BlogListItem[] }) {
+  const data = {
+    "@context": "https://schema.org",
+    "@type": "Blog",
+    name: "MageMatch Blog",
+    url: "https://magematch.com/blog",
+    description: "Practical Magento and Adobe Commerce guides from certified experts.",
+    blogPost: items.map((item) => ({
+      "@type": "BlogPosting",
+      headline: item.title,
+      description: item.description || "Magento guide",
+      datePublished: item.created_at,
+      url: `https://magematch.com/blog/${item.slug}`,
+    })),
+  };
+
+  return <JsonLdScript data={data} />;
+}
+
 export function BlogPostJsonLd({ post }: { post: BlogJsonLdPost }) {
   const description = post.excerpt || post.description || "Magento guide";
 
@@ -113,15 +141,21 @@ export function BlogPostJsonLd({ post }: { post: BlogJsonLdPost }) {
     "@type": "BlogPosting",
     headline: post.title,
     description,
+    image: `https://magematch.com/blog/${post.slug}/opengraph-image`,
+    keywords: post.tags || [],
     author: {
       "@type": "Person",
       name: post.author,
-      url: "https://magematch.com/developers/arjun-dhiman",
+      url: post.authorUrl || "https://magematch.com/developers/arjun-dhiman",
     },
     publisher: {
       "@type": "Organization",
       name: "MageMatch",
       url: "https://magematch.com",
+      logo: {
+        "@type": "ImageObject",
+        url: "https://magematch.com/magematch-logo.svg",
+      },
     },
     datePublished: post.created_at,
     dateModified: post.updated_at || post.created_at,

@@ -9,7 +9,10 @@ export default function robots(): MetadataRoute.Robots {
         disallow: ['/admin/', '/api/'],
       },
     ],
-    sitemap: 'https://magematch.com/sitemap.xml',
+    sitemap: [
+      'https://magematch.com/sitemap.xml',
+      'https://magematch.com/feed.xml',
+    ],
     host: 'https://magematch.com',
   };
 }

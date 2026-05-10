@@ -11,23 +11,28 @@ export const metadata: Metadata = {
     "enterprise magento developer europe",
     "adobe commerce consultant europe",
     "b2b magento developer europe",
+    "adobe commerce cloud developer europe",
   ],
-  alternates: { canonical: "/hire/adobe-commerce-developer-europe" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Adobe Commerce Hiring Europe",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/adobe-commerce-developer-europe" },
   openGraph: {
     title: "Hire Adobe Commerce Developers in Europe | MageMatch",
     description:
       "Find vetted Adobe Commerce developers in Europe for enterprise builds, cloud projects, and complex integrations.",
-    url: "/hire/adobe-commerce-developer-europe",
+    url: "https://magematch.com/hire/adobe-commerce-developer-europe",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Adobe Commerce Developers in Europe | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Adobe Commerce Developers in Europe | MageMatch",
     description:
       "Find vetted Adobe Commerce developers in Europe for enterprise ecommerce delivery.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

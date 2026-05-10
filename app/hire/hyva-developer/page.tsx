@@ -14,22 +14,26 @@ export const metadata: Metadata = {
     "luma to hyva migration",
     "hyva react tailwind magento",
   ],
-  alternates: { canonical: "/hire/hyva-developer" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Hyvä Theme Development",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/hyva-developer" },
   openGraph: {
     title: "Hire Hyvä Developer | MageMatch",
     description:
       "Hire Hyvä-certified Magento 2 frontend developers for new theme builds, Luma migrations, and fast Core Web Vitals scores.",
-    url: "/hire/hyva-developer",
+    url: "https://magematch.com/hire/hyva-developer",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Hyvä Developer | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Hyvä Developer | MageMatch",
     description:
       "Hire Hyvä-certified Magento 2 frontend developers for new theme builds, Luma migrations, and fast Core Web Vitals scores.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

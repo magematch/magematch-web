@@ -13,22 +13,26 @@ export const metadata: Metadata = {
     "magento enterprise consultant",
     "adobe commerce implementation",
   ],
-  alternates: { canonical: "/hire/adobe-commerce-consultant" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Adobe Commerce Consulting",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/adobe-commerce-consultant" },
   openGraph: {
     title: "Hire Adobe Commerce Consultant | MageMatch",
     description:
       "Connect with certified Adobe Commerce consultants matched to your architecture, integration, or implementation needs.",
-    url: "/hire/adobe-commerce-consultant",
+    url: "https://magematch.com/hire/adobe-commerce-consultant",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Adobe Commerce Consultant | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Adobe Commerce Consultant | MageMatch",
     description:
       "Connect with certified Adobe Commerce consultants matched to your architecture, integration, or implementation needs.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

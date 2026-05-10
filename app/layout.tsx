@@ -49,6 +49,9 @@ export const metadata: Metadata = {
   alternates: {
     canonical: "https://magematch.com",
     types: {
+      "application/rss+xml": [
+        { url: "https://magematch.com/feed.xml", title: "MageMatch Blog RSS Feed" },
+      ],
       "text/plain": [
         { url: "https://magematch.com/llms.txt", title: "MageMatch LLM Summary" },
         { url: "https://magematch.com/llms-full.txt", title: "MageMatch LLM Full Detail" },

@@ -11,23 +11,28 @@ export const metadata: Metadata = {
     "adobe commerce developer uk",
     "hire adobe commerce developer london",
     "magento specialist united kingdom",
+    "magento freelancer uk",
   ],
-  alternates: { canonical: "/hire/magento-developer-uk" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Magento Hiring UK",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/magento-developer-uk" },
   openGraph: {
     title: "Hire Magento Developers in the UK | MageMatch",
     description:
       "Find vetted Magento and Adobe Commerce developers in the UK for delivery-critical ecommerce projects.",
-    url: "/hire/magento-developer-uk",
+    url: "https://magematch.com/hire/magento-developer-uk",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Hire Magento Developers in the UK | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Hire Magento Developers in the UK | MageMatch",
     description:
       "Find vetted Magento and Adobe Commerce developers in the UK for delivery-critical ecommerce projects.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

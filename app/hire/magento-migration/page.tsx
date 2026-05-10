@@ -14,22 +14,26 @@ export const metadata: Metadata = {
     "magento data migration service",
     "magento eol migration",
   ],
-  alternates: { canonical: "/hire/magento-migration" },
+  authors: [{ name: "MageMatch", url: "https://magematch.com" }],
+  category: "Magento Migration",
+  robots: { index: true, follow: true },
+  alternates: { canonical: "https://magematch.com/hire/magento-migration" },
   openGraph: {
     title: "Magento Migration Experts | MageMatch",
     description:
       "Find experienced Magento migration specialists for M1→M2 upgrades, replatforming, and data migration — matched within 2 hours.",
-    url: "/hire/magento-migration",
+    url: "https://magematch.com/hire/magento-migration",
     siteName: "MageMatch",
     type: "website",
-    images: ["/favicon.svg"],
+    images: [{ url: "https://magematch.com/opengraph-image", width: 1200, height: 630, alt: "Magento Migration Experts | MageMatch" }],
   },
   twitter: {
     card: "summary_large_image",
     title: "Magento Migration Experts | MageMatch",
     description:
       "Find experienced Magento migration specialists for M1→M2 upgrades, replatforming, and data migration — matched within 2 hours.",
-    images: ["/favicon.svg"],
+    images: ["https://magematch.com/opengraph-image"],
+    creator: "@magematch",
   },
 };
 

@@ -62,6 +62,12 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
       title: `${typedPost.title} | MageMatch Blog`,
       description: typedPost.description,
       keywords: [...(typedPost.tags || []), "magento", "adobe commerce"],
+      authors: [{ name: typedPost.author, url: typedPost.authorUrl || "https://magematch.com/developers/arjun-dhiman" }],
+      category: typedPost.tags?.[0] || "Magento",
+      robots: {
+        index: true,
+        follow: true,
+      },
       alternates: {
         canonical: `https://magematch.com/blog/${typedPost.slug}`,
       },
@@ -71,13 +77,23 @@ export async function generateMetadata({ params }: BlogPostPageProps): Promise<M
         url: `https://magematch.com/blog/${typedPost.slug}`,
         siteName: "MageMatch",
         type: "article",
-        images: [`https://magematch.com/blog/${typedPost.slug}/opengraph-image`],
+        publishedTime: typedPost.created_at,
+        modifiedTime: typedPost.updated_at || typedPost.created_at,
+        authors: [typedPost.author],
+        tags: typedPost.tags || [],
+        images: [{
+          url: `https://magematch.com/blog/${typedPost.slug}/opengraph-image`,
+          width: 1200,
+          height: 630,
+          alt: typedPost.title,
+        }],
       },
       twitter: {
         card: "summary_large_image",
         title: typedPost.title,
         description: typedPost.description,
         images: [`https://magematch.com/blog/${typedPost.slug}/opengraph-image`],
+        creator: "@magematch",
       },
     };
   } catch (err) {
@@ -112,9 +128,11 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
             title: typedPost.title,
             description: typedPost.description,
             author: typedPost.author,
+            authorUrl: typedPost.authorUrl,
             created_at: postDate,
             updated_at: typedPost.updated_at,
             slug: typedPost.slug,
+            tags: typedPost.tags,
           }}
         />
         <BreadcrumbListJsonLd
