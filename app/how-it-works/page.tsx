@@ -2,6 +2,7 @@ import type { Metadata } from "next";
 import Link from "next/link";
 import Footer from "../components/Footer";
 import Header from "../components/Header";
+import HowItWorksCard from "../components/HowItWorksCard";
 
 export const metadata: Metadata = {
   title: "How MageMatch Works | Hire Magento Experts Fast",
@@ -95,17 +96,7 @@ export default function HowItWorksPage() {
                     desc: "Use productized packages (audits, bug fixes, setups) or hourly work for ongoing initiatives.",
                   },
                 ].map((i) => (
-                  <div
-                    key={i.title}
-                    className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.55)]"
-                  >
-                    <p className="text-lg font-semibold text-zinc-900">
-                      {i.title}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-zinc-600">
-                      {i.desc}
-                    </p>
-                  </div>
+                  <HowItWorksCard key={i.title} title={i.title} desc={i.desc} />
                 ))}
               </div>
             </div>
@@ -133,17 +124,7 @@ export default function HowItWorksPage() {
                     desc: "MageMatch is curated. Your certification and project history is a strength—not lost in a crowded feed.",
                   },
                 ].map((i) => (
-                  <div
-                    key={i.title}
-                    className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.55)]"
-                  >
-                    <p className="text-lg font-semibold text-zinc-900">
-                      {i.title}
-                    </p>
-                    <p className="mt-2 text-sm leading-6 text-zinc-600">
-                      {i.desc}
-                    </p>
-                  </div>
+                  <HowItWorksCard key={i.title} title={i.title} desc={i.desc} />
                 ))}
               </div>
             </div>
@@ -165,6 +146,19 @@ export default function HowItWorksPage() {
                 </p>
 
                 <div className="mt-8 grid gap-4 sm:grid-cols-2">
+                  {/* AI-Accelerated Delivery Card - visually distinct and dynamic */}
+                  <HowItWorksCard
+                    title="⚡ AI-Accelerated Delivery"
+                    desc="Leverage AI to match, scope, and launch Magento projects faster than ever. Our AI-driven workflow accelerates requirements gathering, developer matching, and project kickoff—so you get results in hours, not weeks."
+                    highlight
+                    dynamicContent={
+                      <div className="flex items-center gap-2 animate-pulse">
+                        <svg width="28" height="28" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+                        <span className="text-orange-600 font-semibold">AI-powered speed</span>
+                      </div>
+                    }
+                  />
+                  {/* Existing cards */}
                   {[
                     {
                       title: "Magento-aware prompts",
@@ -208,18 +202,7 @@ export default function HowItWorksPage() {
                       ),
                     },
                   ].map((c) => (
-                    <div
-                      key={c.title}
-                      className="rounded-3xl border border-zinc-200/70 bg-white p-6 shadow-[0_1px_0_0_rgba(15,23,42,0.03),0_16px_40px_-28px_rgba(15,23,42,0.55)]"
-                    >
-                      {c.icon}
-                      <p className="mt-4 text-lg font-semibold text-zinc-900">
-                        {c.title}
-                      </p>
-                      <p className="mt-2 text-sm leading-6 text-zinc-600">
-                        {c.desc}
-                      </p>
-                    </div>
+                    <HowItWorksCard key={c.title} title={c.title} desc={c.desc} icon={c.icon} />
                   ))}
                 </div>
               </div>

@@ -13,9 +13,9 @@ import {
 } from "../lib/supabase-types";
 
 export const metadata: Metadata = {
-  title: "Hire Trusted Magento & Adobe Commerce Experts Faster",
+  title: "AI-Powered Magento & Adobe Commerce Talent, Matched Globally—Faster",
   description:
-    "Find developers, agencies, architects, Hyvä experts, and migration specialists in one trusted Magento and Adobe Commerce marketplace.",
+    "MageMatch uses AI to match you with top Magento and Adobe Commerce experts worldwide. Our developers leverage AI tools for faster delivery, smarter solutions, and 24/7 progress—so your business moves at the speed of innovation.",
   keywords: [
     "hire magento developer",
     "adobe commerce developer",
@@ -27,9 +27,9 @@ export const metadata: Metadata = {
     canonical: "/",
   },
   openGraph: {
-    title: "Hire Magento Developers in Europe | MageMatch",
+    title: "AI-Powered Magento & Adobe Commerce Talent, Matched Globally—Faster",
     description:
-      "Find trusted Adobe Commerce (Magento) developers for bug fixes, speed optimization, Hyvä, and custom development.",
+      "MageMatch uses AI to match you with top Magento and Adobe Commerce experts worldwide. Our developers leverage AI tools for faster delivery, smarter solutions, and 24/7 progress—so your business moves at the speed of innovation.",
     url: "/",
     siteName: "MageMatch",
     type: "website",
@@ -37,9 +37,9 @@ export const metadata: Metadata = {
   },
   twitter: {
     card: "summary_large_image",
-    title: "Hire Magento Developers in Europe | MageMatch",
+    title: "AI-Powered Magento & Adobe Commerce Talent, Matched Globally—Faster",
     description:
-      "Find trusted Adobe Commerce (Magento) developers for bug fixes, speed optimization, Hyvä, and custom development.",
+      "MageMatch uses AI to match you with top Magento and Adobe Commerce experts worldwide. Our developers leverage AI tools for faster delivery, smarter solutions, and 24/7 progress—so your business moves at the speed of innovation.",
     images: ["/favicon.svg"],
   },
 };
@@ -104,6 +104,13 @@ async function HomeContent({
     <div className="flex min-h-full flex-1 flex-col">
       <Header />
 
+      {/* AI Callout Bar */}
+      <div className="w-full bg-linear-to-r from-orange-100 via-white to-orange-50 py-2 text-center text-sm font-semibold text-orange-700 shadow-sm">
+        <span className="inline-flex items-center gap-2 justify-center">
+          <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+          Powered by AI—smarter matching, faster delivery, global results
+        </span>
+      </div>
       <main className="flex-1">
         <section className="relative overflow-hidden bg-linear-to-b from-zinc-50 to-white">
           <div className="pointer-events-none absolute inset-0">
@@ -118,16 +125,13 @@ async function HomeContent({
                   Niche marketplace for Magento & Adobe Commerce talent
                 </p>
                 <h1 className="mt-6 text-4xl font-semibold tracking-tight text-zinc-900 sm:text-4xl lg:text-4xl">
-                  Hire Trusted Magento &amp; Adobe Commerce Experts Faster
+                  AI-Powered Magento &amp; Adobe Commerce Talent, Matched Globally—Faster
                 </h1>
                 <p className="mt-6 max-w-2xl text-lg leading-8 text-zinc-600 sm:text-xl sm:leading-9">
-                  Find developers, agencies, architects, Hyvä experts, and
-                  migration specialists in one trusted marketplace.
+                  MageMatch uses AI to instantly match you with the world’s best Magento and Adobe Commerce experts. Our developers leverage AI tools for rapid delivery, smarter solutions, and 24/7 project momentum—wherever you are.
                 </p>
                 <p className="mt-4 max-w-xl text-sm leading-6 text-zinc-500 sm:text-base">
-                  Skip generic freelance platforms. MageMatch is built only for
-                  Magento and Adobe Commerce hiring, so you see relevant talent
-                  faster and shortlist with confidence.
+                  Skip generic platforms. MageMatch’s AI-driven approach means you get relevant, AI-empowered talent and faster results—globally.
                 </p>
 
                 <div className="mt-9 flex flex-col gap-3 sm:flex-row sm:items-center">
@@ -306,11 +310,10 @@ async function HomeContent({
         <section className="bg-zinc-100/80">
           <div className="mx-auto w-full max-w-6xl px-4 py-14 sm:px-6">
             <h2 className="text-2xl font-semibold tracking-tight text-zinc-900 sm:text-3xl">
-              Why MageMatch converts faster than generic hiring platforms
+              Why MageMatch’s AI-Driven Approach Wins
             </h2>
             <p className="mt-3 max-w-3xl text-base leading-7 text-zinc-600">
-              Every part of the marketplace is designed around Magento hiring:
-              better-fit talent, clearer briefs, and faster shortlists.
+              MageMatch uses AI to match you with the right Magento talent, scope projects with clarity, and accelerate delivery. Our platform and developers both leverage AI—so you get smarter solutions, faster outcomes, and a global edge.
             </p>
             <div className="mt-8 overflow-hidden rounded-3xl border border-zinc-200 bg-white shadow-sm">
               <div className="grid grid-cols-2 border-b border-zinc-200">
@@ -325,6 +328,7 @@ async function HomeContent({
                 {[
                   ["Mixed stack freelancers", "Magento & Adobe Commerce specialists only"],
                   ["You write the brief alone", "AI-guided brief builder for faster matching"],
+                  ["Developers rely on manual work", "All MageMatch experts use AI tools for rapid delivery"],
                   ["Hard to find Hyvä / migration expertise", "Dedicated niche experts across Hyvä, upgrades, performance, and migrations"],
                   ["Slow filtering and outreach", "Relevant profiles and quotes within 2 hours"],
                 ].map((row) => (

@@ -84,11 +84,10 @@ export default function FeaturedExpertsSection({
               Featured Experts
             </p>
             <h2 className="mt-3 text-3xl font-semibold tracking-tight text-zinc-900 sm:text-4xl">
-              Meet trusted Magento specialists merchants shortlist first
+              Meet AI-Empowered Magento Specialists
             </h2>
             <p className="mt-4 text-base leading-7 text-zinc-600 sm:text-lg">
-              Explore a premium mix of Adobe Commerce engineers, architects, Hyvä experts,
-              and migration specialists — all presented with the details decision-makers care about.
+              Every expert here leverages AI tools to deliver solutions faster, automate best practices, and keep your project moving 24/7. Experience the next generation of Adobe Commerce talent—powered by AI, trusted by merchants worldwide.
             </p>
           </div>
 
@@ -129,6 +128,10 @@ export default function FeaturedExpertsSection({
                     <div>
                       <p className="inline-flex rounded-full bg-white/90 px-2.5 py-1 text-[11px] font-semibold text-zinc-700 ring-1 ring-zinc-200">
                         {expert.badge}
+                        <span className="ml-2 inline-flex items-center gap-1 rounded-full bg-orange-50 px-2 py-0.5 text-[10px] font-bold uppercase text-orange-600 ring-1 ring-orange-200">
+                          <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="#F97316" strokeWidth="2"><circle cx="12" cy="12" r="10" /><path d="M12 6v6l4 2" /></svg>
+                          AI-empowered
+                        </span>
                       </p>
                       <h3 className="mt-3 text-lg font-semibold tracking-tight text-zinc-900">
                         {expert.name}
