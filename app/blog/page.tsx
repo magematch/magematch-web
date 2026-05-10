@@ -73,6 +73,21 @@ export default async function BlogPage() {
           <p className="mt-4 max-w-3xl text-base leading-7 text-zinc-600 sm:text-lg">
             Practical guides from Adobe Commerce Certified Masters
           </p>
+
+          <div className="mt-5 flex flex-wrap gap-2">
+            <Link
+              href="/hire/magento-expert-europe"
+              className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200 hover:bg-orange-100"
+            >
+              Need to hire Magento experts in Europe?
+            </Link>
+            <Link
+              href="/hire/adobe-commerce-developer-europe"
+              className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200 hover:bg-orange-100"
+            >
+              Compare Adobe Commerce developers in Europe
+            </Link>
+          </div>
         </section>
 
         {error ? (

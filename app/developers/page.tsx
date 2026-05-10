@@ -76,6 +76,21 @@ export default async function DevelopersPage() {
             <p className="text-sm text-zinc-600">
               Filter by skill, country, hourly rate, availability, and team type to find the best-fit expert faster.
             </p>
+
+            <div className="mt-5 flex flex-wrap gap-2">
+              <Link
+                href="/hire/magento-expert-europe"
+                className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200 hover:bg-orange-100"
+              >
+                Hire Magento Experts in Europe
+              </Link>
+              <Link
+                href="/hire/adobe-commerce-developer-europe"
+                className="inline-flex rounded-full bg-orange-50 px-3 py-1 text-xs font-semibold text-orange-700 ring-1 ring-orange-200 hover:bg-orange-100"
+              >
+                Hire Adobe Commerce Developers in Europe
+              </Link>
+            </div>
           </div>
 
           {error ? (

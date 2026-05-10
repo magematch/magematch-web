@@ -1,6 +1,9 @@
 import type { Metadata } from "next";
 import Link from "next/link";
 import { notFound } from "next/navigation";
+import { remark } from "remark";
+import remarkGfm from "remark-gfm";
+import remarkHtml from "remark-html";
 import Footer from "../../components/Footer";
 import Header from "../../components/Header";
 import { BlogPostJsonLd, BreadcrumbListJsonLd } from "../../components/JsonLd";
@@ -19,6 +22,24 @@ type BlogPostPageProps = {
     slug: string;
   }>;
 };
+
+function normalizeMarkdownContent(content: string): string {
+  return content
+    .replace(/\r\n/g, "\n")
+    .replace(/^-(\S)/gm, "- $1")
+    .replace(/^##(\S)/gm, "## $1")
+    .replace(/^###(\S)/gm, "### $1");
+}
+
+async function renderMarkdownToHtml(content: string): Promise<string> {
+  const normalized = normalizeMarkdownContent(content);
+  const result = await remark()
+    .use(remarkGfm)
+    .use(remarkHtml, { sanitize: false })
+    .process(normalized);
+
+  return String(result);
+}
 
 export async function generateMetadata({ params }: BlogPostPageProps): Promise<Metadata> {
   const { slug } = await params;
@@ -82,6 +103,7 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
 
     const typedPost = normalizeBlogPost(post as RawBlogPost);
     const postDate = typedPost.date || typedPost.created_at || new Date().toISOString();
+    const renderedContentHtml = await renderMarkdownToHtml(typedPost.content || "");
 
     return (
       <div className="flex min-h-full flex-1 flex-col">
@@ -143,9 +165,33 @@ export default async function BlogPostPage({ params }: BlogPostPageProps) {
                   </p>
                 </div>
 
-                <div className="prose prose-zinc mt-8 max-w-none">
-                  <div className="mt-8 whitespace-pre-wrap text-base leading-8 text-zinc-700">
-                    {typedPost.content}
+                <div className="mt-8 max-w-none">
+                  <div
+                    className="text-base leading-8 text-zinc-700 [&_h2]:mt-10 [&_h2]:text-2xl [&_h2]:font-semibold [&_h2]:tracking-tight [&_h2]:text-zinc-900 sm:[&_h2]:text-3xl [&_h3]:mt-8 [&_h3]:text-xl [&_h3]:font-semibold [&_h3]:tracking-tight [&_h3]:text-zinc-900 [&_p]:mt-5 [&_ul]:mt-5 [&_ul]:list-disc [&_ul]:space-y-2 [&_ul]:pl-6 [&_ol]:mt-5 [&_ol]:list-decimal [&_ol]:space-y-2 [&_ol]:pl-6 [&_li]:pl-1 [&_strong]:font-semibold [&_strong]:text-zinc-900 [&_em]:italic [&_em]:text-zinc-800 [&_blockquote]:mt-6 [&_blockquote]:rounded-r-2xl [&_blockquote]:border-l-4 [&_blockquote]:border-orange-400 [&_blockquote]:bg-orange-50/60 [&_blockquote]:px-4 [&_blockquote]:py-3 [&_pre]:mt-5 [&_pre]:overflow-x-auto [&_pre]:rounded-2xl [&_pre]:bg-zinc-900 [&_pre]:p-4 [&_pre]:text-sm [&_pre]:leading-7 [&_pre]:text-zinc-100 [&_code]:rounded [&_code]:bg-zinc-100 [&_code]:px-1.5 [&_code]:py-0.5 [&_code]:text-[0.9em] [&_code]:font-medium [&_code]:text-zinc-800 [&_a]:font-semibold [&_a]:text-orange-700 [&_a]:underline [&_a]:decoration-orange-300 [&_a]:decoration-2 [&_a]:underline-offset-2 hover:[&_a]:text-orange-800 hover:[&_a]:decoration-orange-500"
+                    dangerouslySetInnerHTML={{ __html: renderedContentHtml }}
+                  />
+                </div>
+
+                <div className="mt-10 rounded-3xl border border-orange-200/80 bg-linear-to-br from-orange-50 via-white to-white p-6 sm:p-8">
+                  <h3 className="text-xl font-semibold tracking-tight text-zinc-900">
+                    Need help with this Magento issue?
+                  </h3>
+                  <p className="mt-2 text-sm leading-6 text-zinc-600">
+                    Talk to a vetted Magento expert for debugging, performance, integrations, or upgrade planning.
+                  </p>
+                  <div className="mt-5 flex flex-col gap-3 sm:flex-row">
+                    <Link
+                      href="/contact"
+                      className="inline-flex items-center justify-center rounded-full bg-orange-500 px-5 py-2.5 text-sm font-semibold text-white transition hover:bg-orange-600"
+                    >
+                      Get expert help →
+                    </Link>
+                    <Link
+                      href="/developers"
+                      className="inline-flex items-center justify-center rounded-full border border-zinc-200 bg-white px-5 py-2.5 text-sm font-semibold text-zinc-800 transition hover:border-orange-200 hover:text-orange-700"
+                    >
+                      Browse developers
+                    </Link>
                   </div>
                 </div>
 
